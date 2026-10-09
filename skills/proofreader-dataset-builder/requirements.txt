@@ -1,0 +1,7 @@
+pymupdf>=1.24.0
+reportlab>=4.0.0
+jsonschema>=4.20.0
+numpy>=1.26.0
+# LLM access: use the project's existing Bedrock/API credentials.
+# No LLM-vendor package is pinned here: INJECTOR_MODEL and VERIFIER_MODEL
+# must be set from different model families (see SKILL.md §0).

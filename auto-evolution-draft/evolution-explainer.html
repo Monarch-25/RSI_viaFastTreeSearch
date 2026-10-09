@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teaching Software to Improve Itself — Auto-Evolution Explainer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" integrity="sha384-nB0miv6/jRmo5UMMR1wu3Gz6NLsoTkbqJghGIsx//Rlm+ZU03BU6SQNC66uf4l5+" crossorigin="anonymous">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" integrity="sha384-7zkQWkzuo3B5mTepMUcHkMB5jZaolc2xDwL6VFqjFALcbeS9Ggm/Yr2r3Dy4lfFg" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" integrity="sha384-43gviWU0YVjaDtb/GhzOouOXtZMP/7XUzwPTstBeZFe/+rCMvRwr4yROQP43s0Xk" crossorigin="anonymous"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'\\(',right:'\\)',display:false}],throwOnError:false,strict:false});"></script>
+<style>
+/* ─────────────────────────────────────────────
+   Design tokens — warm "explainer" palette
+   research palette: slate / teal / stone on cream
+   ───────────────────────────────────────────── */
+:root{
+  --cream:#FAF8F3; --paper:#FFFFFF; --paper-2:#FCFBF7;
+  --ink:#23201B; --ink-2:#4A443C; --ink-3:#7A7368; --ink-4:#A39B8D;
+  --line:#E9E3D7; --line-2:#D9D1C1;
+  --slate:#3B4F66; --slate-d:#1F3349; --slate-soft:#E9EEF3; --slate-mid:#6B7F96;
+  --teal:#2F6B57; --teal-d:#1E4A3C; --teal-soft:#E7F0EB; --teal-mid:#5A9179;
+  --stone:#7A6420; --stone-d:#5A4A14; --stone-soft:#F7F0DF; --stone-mid:#A98F3F;
+  --terra:#C05621; --terra-soft:#FBEBDD;
+  --shadow-s:0 1px 2px rgba(35,32,27,.05),0 2px 8px rgba(35,32,27,.05);
+  --shadow-m:0 2px 4px rgba(35,32,27,.05),0 12px 32px rgba(35,32,27,.07);
+  --shadow-l:0 4px 8px rgba(35,32,27,.05),0 24px 64px rgba(35,32,27,.10);
+  --r-s:8px; --r-m:14px; --r-l:20px; --r-xl:28px;
+  --f-disp:"Fraunces","Newsreader",Georgia,serif;
+  --f-body:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono","SF Mono",ui-monospace,Menlo,monospace;
+  --ease:cubic-bezier(.33,.1,.2,1);
+  --max-prose:680px; --max-wide:1040px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  font-family:var(--f-body);background:var(--cream);color:var(--ink);
+  font-size:17px;line-height:1.68;-webkit-font-smoothing:antialiased;
+  font-feature-settings:"kern","liga";overflow-x:hidden;
+}
+::selection{background:var(--stone-soft);color:var(--stone-d)}
+
+/* ── scroll progress bar ── */
+#progress{position:fixed;top:0;left:0;height:3px;width:100%;z-index:120;background:transparent;pointer-events:none}
+#progress span{display:block;height:100%;width:100%;transform-origin:0 50%;transform:scaleX(0);
+  background:linear-gradient(90deg,var(--slate),var(--teal) 60%,var(--stone));}
+
+/* ── nav rail ── */
+#rail{position:fixed;right:22px;top:50%;transform:translateY(-50%);z-index:110;
+  display:flex;flex-direction:column;gap:9px;align-items:flex-end}
+#rail a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink-3);
+  font-size:11.5px;font-weight:500;letter-spacing:.02em}
+#rail .lbl{opacity:0;transform:translateX(6px);transition:all .25s var(--ease);white-space:nowrap;
+  background:var(--paper);border:1px solid var(--line);padding:3px 9px;border-radius:99px;box-shadow:var(--shadow-s)}
+#rail a:hover .lbl,#rail a:focus-visible .lbl{opacity:1;transform:translateX(0)}
+#rail .dot{width:8px;height:8px;border-radius:50%;background:var(--line-2);transition:all .3s var(--ease);flex:none}
+#rail a.active .dot{background:var(--teal);transform:scale(1.5);box-shadow:0 0 0 4px var(--teal-soft)}
+#rail a.active .lbl{opacity:1;transform:translateX(0);color:var(--teal-d);border-color:var(--teal-mid)}
+#rail .sep{width:1px;height:14px;background:var(--line-2);margin:2px auto;flex:none;align-self:center}
+@media(max-width:1240px){#rail{display:none}}
+
+/* ── layout ── */
+.wrap{max-width:var(--max-prose);margin:0 auto;padding:0 24px}
+.wide{max-width:var(--max-wide);margin:0 auto;padding:0 24px}
+section{padding:0;scroll-margin-top:24px}
+h1,h2,h3,h4{font-family:var(--f-disp);font-weight:600;letter-spacing:-.015em;line-height:1.18;color:var(--ink)}
+p{margin:0 0 1.05em}
+p:last-child{margin-bottom:0}
+a{color:var(--teal-d)}
+strong{font-weight:600;color:var(--ink)}
+em{font-style:italic}
+code,.mono{font-family:var(--f-mono);font-size:.86em;background:var(--slate-soft);
+  padding:.12em .38em;border-radius:5px;color:var(--slate-d);letter-spacing:-.01em}
+
+/* ── hero ── */
+#hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;
+  padding:96px 0 72px;position:relative;overflow:hidden}
+#hero::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:
+    radial-gradient(720px 420px at 82% -8%,rgba(47,107,87,.07),transparent 65%),
+    radial-gradient(600px 380px at 6% 8%,rgba(122,100,32,.06),transparent 60%),
+    radial-gradient(500px 300px at 50% 110%,rgba(59,79,102,.05),transparent 60%);}
+#hero>*{position:relative}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:12px;font-weight:600;
+  letter-spacing:.13em;text-transform:uppercase;color:var(--teal);
+  background:var(--teal-soft);border:1px solid rgba(47,107,87,.18);
+  padding:6px 14px;border-radius:99px;margin-bottom:26px}
+.eyebrow .pip{width:6px;height:6px;border-radius:50%;background:var(--teal);animation:pip 2.4s var(--ease) infinite}
+@keyframes pip{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.35;transform:scale(.7)}}
+h1{font-size:clamp(2.4rem,5.4vw,3.9rem);font-weight:600;letter-spacing:-.028em;
+  line-height:1.08;margin-bottom:22px;max-width:16ch}
+h1 .grad{background:linear-gradient(100deg,var(--teal-d) 15%,var(--slate-d) 85%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.dek{font-size:clamp(1.02rem,1.6vw,1.2rem);color:var(--ink-2);max-width:56ch;line-height:1.62;margin-bottom:30px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:44px}
+.chip{font-size:12px;font-weight:600;letter-spacing:.02em;padding:5px 12px;border-radius:99px;
+  border:1px solid var(--line-2);background:var(--paper);color:var(--ink-2);box-shadow:var(--shadow-s)}
+.chip.mono-chip{font-family:var(--f-mono);font-weight:500;font-size:11px}
+.scroll-hint{display:flex;align-items:center;gap:10px;color:var(--ink-3);font-size:13.5px;font-weight:500}
+.scroll-hint .arr{display:inline-block;animation:bob 1.8s var(--ease) infinite}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(5px)}}
+
+/* hero failure visual */
+.hero-visual{margin:52px auto 0;max-width:1200px;padding:0 24px}
+.hero-visual svg{width:100%;height:auto;display:block}
+
+/* ── prose blocks ── */
+.prose{padding:48px 0}
+.prose h2{font-size:clamp(1.5rem,2.8vw,2rem);margin:0 0 16px}
+.prose h3{font-size:1.35rem;margin:40px 0 14px}
+.lede{font-size:1.08rem;color:var(--ink-2);line-height:1.66}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--teal);margin-bottom:10px}
+
+/* ── figure cards ── */
+.fig{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-l);
+  box-shadow:var(--shadow-m);padding:22px;margin:34px 0;overflow:hidden}
+.fig.pad0{padding:0}
+.fig img{width:100%;height:auto;display:block;border-radius:var(--r-m)}
+.fig .cap{font-size:14px;color:var(--ink-3);line-height:1.6;margin-top:16px;padding:0 6px;max-width:120ch}
+.fig .cap b{color:var(--ink-2);font-weight:600}
+.fig-svg{background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:18px 12px;margin:0}
+.fig-svg svg{width:100%;height:auto;display:block}
+
+/* ── bleed figures: 1.5x the prose column, centered on it ── */
+.fig.bleed{width:min(94vw,1020px);max-width:none;margin-top:32px;margin-bottom:32px;
+  margin-left:calc((100% - min(94vw,1020px))/2);
+  margin-right:calc((100% - min(94vw,1020px))/2);padding:20px}
+.fig.bleed .fig-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-m);padding:12px}
+.fig.bleed .fig-scroll>svg,.fig.bleed .fig-scroll>img{width:100%;min-width:720px;height:auto;
+  display:block;border-radius:10px;background:#fff}
+.fig.bleed img{border:none}
+@media(max-width:700px){
+  .fig.bleed{width:100%;margin:28px 0;padding:16px}
+  .fig.bleed .fig-scroll{padding:10px}
+}
+
+/* ── claim labels ── */
+.claim{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.08em;
+  text-transform:uppercase;padding:2px 8px;border-radius:99px;border:1px solid var(--line-2);
+  background:var(--paper);color:var(--ink-3);vertical-align:2px;margin-left:6px;white-space:nowrap}
+.claim.illus{border-color:var(--stone-mid);color:var(--stone-d);background:var(--stone-soft)}
+.claim.paper{border-color:var(--teal-mid);color:var(--teal-d);background:var(--teal-soft)}
+
+/* ── legend ── */
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin:16px 0 0;padding:14px 16px;
+  background:var(--paper-2);border:1px solid var(--line);border-radius:var(--r-m);font-size:12.5px;color:var(--ink-2)}
+.legend i{display:inline-block;width:11px;height:11px;border-radius:3px;margin-right:7px;
+  vertical-align:-1px;border:1.5px solid}
+.lg-data i{background:var(--slate-soft);border-color:var(--slate)}
+.lg-proc i{background:#fff;border-color:var(--slate)}
+.lg-evo i{background:var(--teal-soft);border-color:var(--teal)}
+.lg-gate i{background:var(--stone-soft);border-color:var(--stone)}
+
+/* ── actor tags ── */
+.actors{display:flex;flex-wrap:wrap;gap:7px;margin:18px 0 22px}
+.actor{display:inline-flex;align-items:center;gap:7px;font-size:12px;font-weight:600;
+  padding:5px 12px;border-radius:99px;border:1px solid}
+.actor .tdot{width:7px;height:7px;border-radius:50%}
+.a-mod{background:var(--slate-soft);border-color:rgba(59,79,102,.25);color:var(--slate-d)}
+.a-mod .tdot{background:var(--slate)}
+.a-cop{background:var(--teal-soft);border-color:rgba(47,107,87,.25);color:var(--teal-d)}
+.a-cop .tdot{background:var(--teal)}
+.a-hum{background:var(--stone-soft);border-color:rgba(122,100,32,.28);color:var(--stone-d)}
+.a-hum .tdot{background:var(--stone)}
+.a-model{background:#fff;border-color:var(--line-2);color:var(--ink-2)}
+.a-model .tdot{background:var(--ink-3)}
+
+/* ── output line ── */
+.out{display:flex;align-items:center;gap:10px;font-family:var(--f-mono);font-size:12.5px;
+  color:var(--teal-d);background:var(--teal-soft);border:1px solid rgba(47,107,87,.2);
+  border-radius:var(--r-s);padding:10px 14px;margin:20px 0 0}
+.out .arr{color:var(--teal);font-weight:700}
+
+/* ── callout ── */
+.callout{border-left:3px solid var(--stone);background:var(--stone-soft);
+  border-radius:0 var(--r-m) var(--r-m) 0;padding:16px 20px;margin:24px 0;font-size:14.5px;
+  color:var(--stone-d);line-height:1.6}
+.callout b{color:var(--stone-d)}
+.callout .ct{display:block;font-size:11px;font-weight:700;letter-spacing:.12em;
+  text-transform:uppercase;margin-bottom:6px;color:var(--stone)}
+.callout.terra{border-left-color:var(--terra);background:var(--terra-soft);color:#8A3B12}
+.callout.terra .ct{color:var(--terra)}
+.callout.terra b{color:#8A3B12}
+
+/* ── math toggle ── */
+.math-wrap{margin:22px 0 6px}
+.math-btn{display:inline-flex;align-items:center;gap:9px;font-family:var(--f-body);
+  font-size:12.5px;font-weight:600;letter-spacing:.02em;color:var(--slate-d);
+  background:var(--slate-soft);border:1px solid rgba(59,79,102,.22);
+  padding:7px 15px 7px 11px;border-radius:99px;cursor:pointer;
+  transition:all .25s var(--ease);appearance:none}
+.math-btn:hover{background:#DFE7EF;border-color:rgba(59,79,102,.4);transform:translateY(-1px)}
+.math-btn:focus-visible{outline:2px solid var(--slate);outline-offset:2px}
+.math-btn .sigma{display:grid;place-items:center;width:20px;height:20px;border-radius:50%;
+  background:var(--slate);color:#fff;font-size:11px;font-weight:700;font-family:Georgia,serif;flex:none}
+.math-btn .chev{transition:transform .3s var(--ease);font-size:10px;color:var(--ink-3)}
+.math-btn[aria-expanded="true"] .chev{transform:rotate(180deg)}
+.math-panel{display:grid;grid-template-rows:0fr;transition:grid-template-rows .45s var(--ease),margin .45s var(--ease);
+  margin:0}
+.math-panel.open{grid-template-rows:1fr;margin:14px 0 4px}
+.math-panel>.inner{overflow:hidden;min-height:0}
+.math-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:22px 24px;box-shadow:var(--shadow-s)}
+.math-card .mh{font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--ink-4);margin-bottom:14px}
+.math-card .eq{margin:0 0 16px;padding:4px 0}
+.math-card .eq:last-child{margin-bottom:0}
+.math-card .note{font-size:13px;color:var(--ink-2);line-height:1.55;margin-top:12px;
+  padding-top:12px;border-top:1px dashed var(--line-2)}
+.math-card .note b{color:var(--ink)}
+.katex{font-size:1.04em}
+.katex-display{margin:.5em 0 !important;overflow-x:auto;overflow-y:hidden;padding:2px 0}
+
+/* ── one-shot scroll animations ── */
+.anim{opacity:0;transform:translateY(22px);transition:opacity .8s var(--ease),transform .8s var(--ease)}
+.anim.in{opacity:1;transform:none}
+.anim.d1{transition-delay:.1s}.anim.d2{transition-delay:.2s}.anim.d3{transition-delay:.3s}
+
+/* hero failure sequence */
+.fail-svg .f-line{fill:var(--line);opacity:0}
+.fail-svg .f-ok{stroke:var(--teal);stroke-width:2.5;stroke-linecap:round;
+  stroke-dasharray:120;stroke-dashoffset:120;opacity:0}
+.fail-svg .f-bad{stroke:var(--stone);stroke-width:2.5;stroke-linecap:round;
+  stroke-dasharray:120;stroke-dashoffset:120;opacity:0}
+.fail-svg .f-miss{fill:none;stroke:var(--ink-4);stroke-width:2;stroke-dasharray:5 4;opacity:0}
+.fail-svg .f-chip{opacity:0;transform:scale(.7);transform-origin:center}
+.in-view .fail-svg .f-line{animation:fadeIn .5s var(--ease) forwards}
+.in-view .fail-svg .f-line:nth-of-type(1){animation-delay:.1s}
+.in-view .fail-svg .f-line:nth-of-type(2){animation-delay:.2s}
+.in-view .fail-svg .f-line:nth-of-type(3){animation-delay:.3s}
+.in-view .fail-svg .f-line:nth-of-type(4){animation-delay:.4s}
+.in-view .fail-svg .f-line:nth-of-type(5){animation-delay:.5s}
+.in-view .fail-svg .f-ok{animation:drawLine .5s var(--ease) forwards;animation-delay:.8s}
+.in-view .fail-svg .f-bad{animation:drawLine .5s var(--ease) forwards;animation-delay:1.1s}
+.in-view .fail-svg .f-miss{animation:fadeIn .4s var(--ease) forwards;animation-delay:1.4s}
+.in-view .fail-svg .f-chip{animation:popIn .45s var(--ease) forwards}
+.in-view .fail-svg .fc-ok{animation-delay:.95s}
+.in-view .fail-svg .fc-bad{animation-delay:1.25s}
+.in-view .fail-svg .fc-miss{animation-delay:1.55s}
+@keyframes fadeIn{to{opacity:1}}
+@keyframes drawLine{to{opacity:1;stroke-dashoffset:0}}
+@keyframes popIn{to{opacity:1;transform:scale(1)}}
+@keyframes drawTick{to{opacity:1;stroke-dashoffset:0}}
+@keyframes riseIn{to{opacity:1;transform:translateY(0)}}
+
+/* injection sequence (kept, fonts bumped) */
+.inject-svg .doc-line{fill:var(--line);opacity:0}
+.inject-svg .err-phrase{fill:var(--stone-soft);opacity:0}
+.inject-svg .err-underline{stroke:var(--stone);stroke-width:2.5;stroke-linecap:round;
+  stroke-dasharray:120;stroke-dashoffset:120;opacity:0}
+.inject-svg .violation-chip{opacity:0;transform:scale(.7);transform-origin:center}
+.inject-svg .vcheck circle{fill:#fff;stroke:var(--line-2);stroke-width:1.5}
+.inject-svg .vcheck .tick{stroke:var(--teal);stroke-width:2;fill:none;stroke-linecap:round;
+  stroke-linejoin:round;stroke-dasharray:16;stroke-dashoffset:16;opacity:0}
+.inject-svg .vcheck{opacity:0}
+.inject-svg .lockgrp{opacity:0;transform:translateY(6px)}
+.in-view .inject-svg .doc-line{animation:fadeIn .5s var(--ease) forwards}
+.in-view .inject-svg .doc-line:nth-of-type(1){animation-delay:.1s}
+.in-view .inject-svg .doc-line:nth-of-type(2){animation-delay:.22s}
+.in-view .inject-svg .doc-line:nth-of-type(3){animation-delay:.34s}
+.in-view .inject-svg .doc-line:nth-of-type(4){animation-delay:.46s}
+.in-view .inject-svg .err-phrase{animation:fadeIn .01s linear forwards;animation-delay:.7s}
+.in-view .inject-svg .err-underline{animation:drawLine .5s var(--ease) forwards;animation-delay:.85s}
+.in-view .inject-svg .violation-chip{animation:popIn .45s var(--ease) forwards;animation-delay:1.25s}
+.in-view .inject-svg .vcheck{animation:fadeIn .3s var(--ease) forwards}
+.in-view .inject-svg .vcheck:nth-of-type(1){animation-delay:1.7s}
+.in-view .inject-svg .vcheck:nth-of-type(2){animation-delay:2s}
+.in-view .inject-svg .vcheck:nth-of-type(3){animation-delay:2.3s}
+.in-view .inject-svg .vcheck .tick{animation:drawTick .35s var(--ease) forwards}
+.in-view .inject-svg .vcheck:nth-of-type(1) .tick{animation-delay:1.85s}
+.in-view .inject-svg .vcheck:nth-of-type(2) .tick{animation-delay:2.15s}
+.in-view .inject-svg .vcheck:nth-of-type(3) .tick{animation-delay:2.45s}
+.in-view .inject-svg .lockgrp{animation:riseIn .5s var(--ease) forwards;animation-delay:2.9s}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms !important;animation-iteration-count:1 !important;transition-duration:.01ms !important}
+  html{scroll-behavior:auto}
+  .anim{opacity:1;transform:none}
+}
+
+/* ── recap cards ── */
+.recap{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;margin:30px 0}
+.rc{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);
+  padding:20px;box-shadow:var(--shadow-s)}
+.rc .rn{font-family:var(--f-mono);font-size:11px;color:var(--ink-4);margin-bottom:8px;letter-spacing:.06em}
+.rc h4{font-family:var(--f-body);font-size:.98rem;font-weight:700;margin-bottom:6px;letter-spacing:0}
+.rc p{font-size:13.2px;color:var(--ink-2);line-height:1.55;margin:0}
+.rc.frozen{border-top:3px solid var(--slate)}
+.rc.evolves{border-top:3px solid var(--teal)}
+.rc.human{border-top:3px solid var(--stone)}
+
+/* ── footer ── */
+footer{margin-top:96px;padding:44px 0 60px;border-top:1px solid var(--line);background:var(--paper-2)}
+footer .fwrap{max-width:var(--max-wide);margin:0 auto;padding:0 24px}
+footer h4{font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-4);margin-bottom:14px}
+footer .refs{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:8px 28px;
+  font-size:13px;color:var(--ink-2);line-height:1.6}
+footer .refs a{color:var(--slate-d);text-decoration:none;border-bottom:1px solid var(--line-2)}
+footer .refs a:hover{border-color:var(--slate)}
+footer .meta{margin-top:30px;padding-top:20px;border-top:1px dashed var(--line-2);
+  font-size:12px;color:var(--ink-4);line-height:1.7}
+footer .meta code{font-size:11px}
+
+/* ── misc ── */
+.rule-line{height:1px;background:linear-gradient(90deg,transparent,var(--line-2) 18%,var(--line-2) 82%,transparent);
+  margin:8px 0 0;border:0}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin:24px 0}
+@media(max-width:700px){.two-col{grid-template-columns:1fr}}
+.mini{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-m);padding:18px}
+.mini h4{font-family:var(--f-body);font-size:.95rem;font-weight:700;margin-bottom:8px;letter-spacing:0}
+.mini p{font-size:13.4px;color:var(--ink-2);line-height:1.55;margin:0}
+.mini.ok{border-left:3px solid var(--teal)}
+.mini.no{border-left:3px solid var(--stone)}
+</style>
+</head>
+<body>
+
+<div id="progress"><span></span></div>
+
+<nav id="rail" aria-label="Section navigation">
+  <a href="#hero" data-sec="hero"><span class="lbl">Intro</span><span class="dot"></span></a>
+  <a href="#handfix" data-sec="handfix"><span class="lbl">The failure</span><span class="dot"></span></a>
+  <a href="#why" data-sec="why"><span class="lbl">Why self-improve</span><span class="dot"></span></a>
+  <a href="#pipeline" data-sec="pipeline"><span class="lbl">The pipeline</span><span class="dot"></span></a>
+  <div class="sep"></div>
+  <a href="#feedback" data-sec="feedback"><span class="lbl">Issue cards</span><span class="dot"></span></a>
+  <a href="#score" data-sec="score"><span class="lbl">Scoring &amp; freeze</span><span class="dot"></span></a>
+  <a href="#ladder" data-sec="ladder"><span class="lbl">The cost ladder</span><span class="dot"></span></a>
+  <div class="sep"></div>
+  <a href="#archive" data-sec="archive"><span class="lbl">The archive</span><span class="dot"></span></a>
+  <a href="#router" data-sec="router"><span class="lbl">Selection &amp; routing</span><span class="dot"></span></a>
+  <a href="#space" data-sec="space"><span class="lbl">Search space</span><span class="dot"></span></a>
+  <div class="sep"></div>
+  <a href="#vault" data-sec="vault"><span class="lbl">The vault</span><span class="dot"></span></a>
+  <a href="#lineage" data-sec="lineage"><span class="lbl">Lineage</span><span class="dot"></span></a>
+  <a href="#gates" data-sec="gates"><span class="lbl">The gates</span><span class="dot"></span></a>
+  <div class="sep"></div>
+  <a href="#platform" data-sec="platform"><span class="lbl">The platform</span><span class="dot"></span></a>
+  <a href="#proofread" data-sec="proofread"><span class="lbl">Proofreading example</span><span class="dot"></span></a>
+  <a href="#lifecycle" data-sec="lifecycle"><span class="lbl">Outer loop</span><span class="dot"></span></a>
+  <a href="#recap" data-sec="recap"><span class="lbl">Recap</span><span class="dot"></span></a>
+</nav>
+
+<!-- ══════════════════ HERO ══════════════════ -->
+<header id="hero">
+  <div class="wrap">
+    <div class="eyebrow anim"><span class="pip"></span>Interactive explainer · pilot build</div>
+    <h1 class="anim d1">Teaching software<br><span class="grad">to improve itself</span></h1>
+    <p class="dek anim d2">We are building a system that improves itself: a machine proposes changes to an
+      editable application, a frozen benchmark scores them, cheap judgment decides what is worth evaluating,
+      and humans keep every gate — a bounded, auditable recursion. Our starter domain is a document
+      proofreader learning to hill-climb its own style-guide errors, one sandboxed experiment at a time.
+      Every diagram answers exactly one question. The math hides behind Σ pills.</p>
+    <div class="chips anim d3">
+      <span class="chip mono-chip">bench_v7 · frozen</span>
+      <span class="chip mono-chip">sg_v4.2</span>
+      <span class="chip">250-eval budget</span>
+      <span class="chip">5 smoke docs</span>
+      <span class="chip">local-first</span>
+      <span class="chip">human-gated</span>
+    </div>
+    <div class="scroll-hint anim d3"><span class="arr">↓</span> Scroll — it starts with a failure, not a framework</div>
+  </div>
+
+  <div class="hero-visual anim d3">
+    <!-- HERO FAILURE: what the assistant produced vs. what was actually there -->
+    <svg class="fail-svg" viewBox="0 0 960 280" role="img" aria-label="A proofread document with three outcomes: one correct highlight, one false positive, and one missed error">
+      <!-- document card (scaled up to match the theme) -->
+      <g transform="translate(40 24) scale(1.18) translate(-40 -24)">
+      <rect x="40" y="24" width="430" height="204" rx="12" fill="#fff" stroke="var(--line-2)" stroke-width="1.5"/>
+      <rect x="40" y="24" width="430" height="34" rx="12" fill="var(--slate-soft)"/>
+      <rect x="40" y="46" width="430" height="12" fill="var(--slate-soft)"/>
+      <text x="58" y="46" style="font:600 15px var(--f-body);fill:var(--slate-d)">response_042.md → assistant output</text>
+      <!-- text lines -->
+      <rect class="f-line" x="58" y="78" width="390" height="9" rx="4"/>
+      <rect class="f-line" x="58" y="102" width="360" height="9" rx="4"/>
+      <rect class="f-line" x="58" y="126" width="380" height="9" rx="4"/>
+      <rect class="f-line" x="58" y="150" width="340" height="9" rx="4"/>
+      <rect class="f-line" x="58" y="174" width="370" height="9" rx="4"/>
+      <rect class="f-line" x="58" y="198" width="290" height="9" rx="4"/>
+      <!-- correct highlight (teal underline on line 2 segment) -->
+      <line class="f-ok" x1="140" y1="114" x2="260" y2="114"/>
+      <g class="f-chip fc-ok">
+        <rect x="272" y="98" width="112" height="22" rx="11" fill="var(--teal-soft)" stroke="var(--teal)" stroke-width="1.2"/>
+        <text x="328" y="113" text-anchor="middle" style="font:600 14px var(--f-body);fill:var(--teal-d)">✓ correct</text>
+      </g>
+      <!-- false positive (stone underline on line 3) -->
+      <line class="f-bad" x1="200" y1="138" x2="318" y2="138"/>
+      <g class="f-chip fc-bad">
+        <rect x="324" y="122" width="146" height="22" rx="11" fill="var(--stone-soft)" stroke="var(--stone)" stroke-width="1.2"/>
+        <text x="397" y="137" text-anchor="middle" style="font:600 14px var(--f-body);fill:var(--stone-d)">✗ false positive</text>
+      </g>
+      <!-- missed error (dashed box on line 5) -->
+      <rect class="f-miss" x="120" y="166" width="150" height="22" rx="5"/>
+      <g class="f-chip fc-miss">
+        <rect x="282" y="166" width="104" height="22" rx="11" fill="#fff" stroke="var(--ink-4)" stroke-width="1.2" stroke-dasharray="4 3"/>
+        <text x="334" y="181" text-anchor="middle" style="font:600 14px var(--f-body);fill:var(--ink-3)">? missed</text>
+      </g>
+      </g>
+      <!-- takeaway column -->
+      <text x="600" y="90" style="font:600 22px var(--f-disp);fill:var(--ink)">Three outcomes.</text>
+      <text x="600" y="118" style="font:600 22px var(--f-disp);fill:var(--ink)">Only one is a fix.</text>
+      <text x="600" y="156" style="font:400 15px var(--f-body);fill:var(--ink-2)">The false positive erodes trust.</text>
+      <text x="600" y="178" style="font:400 15px var(--f-body);fill:var(--ink-2)">The miss is the reason the tool exists.</text>
+      <text x="600" y="208" style="font:500 14px var(--f-body);fill:var(--ink-3)">Below: a loop that is allowed to change the</text>
+      <text x="600" y="226" style="font:500 14px var(--f-body);fill:var(--ink-3)">assistant — but never the ruler it is graded by.</text>
+    </svg>
+  </div>
+</header>
+
+<!-- ══════════════════ §1 THE FAILURE ══════════════════ -->
+<section id="handfix" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§1 · The failure</div>
+    <h2 class="anim">It starts with an error nobody fixed</h2>
+    <p class="lede anim">Before any framework: the manual loop. An engineer reads the system's output on a real
+      input, keeps the good behavior, deletes the wrong one, notices the case the system never fires on,
+      and then faces the actual work — figuring out <em>why</em>, changing one thing, and re-running
+      everything to check that the fix didn't break something else.</p>
+
+    <p class="anim">That consequence is the whole problem. A behavior-tunable application is not one function;
+      it is a pipeline of editable decisions — prompts, retrieval, chunking, routing, thresholds, code —
+      and every edit is a trade across behaviors. Doing the loop by hand doesn't scale past the first
+      regression. Doing it without a frozen ruler doesn't scale past the first temptation to game the
+      metric instead of the task.</p>
+
+    <p class="anim">So the system this page describes does three things at once: it runs that loop
+      automatically, it measures each candidate against a benchmark the machine may read but never write,
+      and it keeps a human on every decision that costs money or ships code. Everything after this section
+      is the machinery for making those three things true at the same time.</p>
+
+    <div class="out anim"><span class="arr">→</span> input: an editable app + evidence + a frozen benchmark · output: a better app, with receipts</div>
+  </div>
+</section>
+
+<!-- ══════════════════ §2 WHY SELF-IMPROVEMENT ══════════════════ -->
+<section id="why" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§2 · Why self-improvement</div>
+    <h2 class="anim">Why build a system that improves itself</h2>
+    <p class="lede anim">Most software improves at release-cycle speed: a human notices a failure, a human
+      ships a fix, the next release is just as blind as the last one was. But applications whose behavior
+      lives in editable configuration — prompts, retrieval, routing, thresholds, small code components —
+      could improve continuously, because the fix and the system that applies it are both just text. What
+      has been missing is not the editor. It is the loop: propose, measure, keep — running on its own,
+      without drifting off the metric it claims to optimize.</p>
+    <p class="anim">The payoff compounds. Every generation starts where the last one stopped: the archive
+      keeps every ancestor, so a run never re-pays for ground it already covered. Cheap attempts do the
+      bulk of the exploring; rare, expensive jumps break plateaus. Improvement becomes a budgeted,
+      schedulable activity instead of a heroic one — closer to compound interest than to crunch time.</p>
+    <p class="anim">The reason this recursion is deployable, rather than science fiction, is that it is
+      <strong>bounded by design</strong>. Three constraints do all the safety work: the ruler is frozen
+      (the machine scores against the benchmark forever and writes to it never); money is spent in order
+      of conviction (cheap signals guide, only the frozen scorer decides); and humans hold four gates
+      across every decision chain. A self-improving system that cannot edit its own exam, overspend its
+      budget, or ship without approval is simply an optimizer with an audit trail.</p>
+    <p class="anim">Two papers make the loop practical, and they are this project's main foundations.
+      <strong>SIFT</strong> shows how a pairwise judge plus a Bradley–Terry refit turns expensive model
+      comparisons into a cheap, auditable ranking signal — the judgment this system leans on after every
+      smoke test. <strong>LEVI</strong> shows how to evolve cheaply at all: short budgeted loops, a
+      MAP-Elites archive that protects diversity, and small proxy suites that preserve ranking. Around
+      those two, supporting ideas plug specific holes — reflective mutation in the GEPA style, bandit
+      routing and novelty pressure in the Shinka style, sandboxed execution in the Darwin–Gödel lineage.
+      The rest of this page is that machinery, kept deliberately generic; <a href="#proofread">§14</a>
+      shows how it lands on our starter domain, document proofreading.</p>
+
+    <div class="out anim"><span class="arr">→</span> thesis: bounded recursive self-improvement is an optimizer with an audit trail — starter domain: proofreading</div>
+  </div>
+</section>
+
+<!-- ══════════════════ §2 THE PIPELINE ══════════════════ -->
+<section id="pipeline" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§3 · The pipeline</div>
+    <h2 class="anim">Seven editable decisions, one frozen contract</h2>
+    <p class="lede anim">Take any editable application as a pure function: inputs in, structured outputs out.
+      That contract never changes. What changes — the only things an evolution is allowed to touch — are
+      the decisions inside the pipeline. The figure shows our starter domain, document proofreading, where
+      the contract is <code>run(doc_bytes) → spans[]</code>; read each box as an instance of the general
+      pattern, and <a href="#proofread">§14</a> for how the whole page maps onto it:</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/pipe_proofreader.svg" alt="Vertical pipeline of eight stages from source document to suggestion plus document, with seven chips marking the editable dimensions and a dashed frozen band below for the scorer, vault, and adapter contract" loading="lazy">
+      </div>
+      <p class="cap"><b>The pipeline, with what may change marked.</b> Eight stages turn inputs into
+        structured outputs, top to bottom — shown here in the starter domain, where documents become
+        anchored spans. The seven 𝒮-chips — chunk, retrieval,
+        prompt, routing, logic, highlight mapping, threshold — are this domain's search space; §14 maps
+        them. The dashed band is the
+        frozen floor.</p>
+    </div>
+
+    <p class="anim">Framed that way, improvement is a search problem with a hard budget. One equation states it;
+      the rest of this page is the cost of making it honest:</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-argmax"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-argmax"><div class="inner"><div class="math-card">
+        <div class="mh">The evolution problem</div>
+        <div class="eq">$$c^{\star} = \arg\max_{c \in \mathcal{S}} \; S\!\left(c;\, \mathcal{D}_{\mathrm{discovery}}\right) \quad \text{s.t.} \quad \mathrm{cost}(c) \le B,\;\; \mathrm{lat}(c) \le L,\;\; \mathrm{NoRegress}(c) = \mathrm{true}$$</div>
+        <p class="note">Here <b>c</b> is the full editable configuration — code, prompts, retrieval, routing, thresholds — drawn from a frozen search space <b>𝒮</b>. <b>S</b> is a single deterministic scoring function on the discovery split. Generalization is checked <b>once</b>, on a sequestered holdout, under a human gate. Evolution is open-ended within <b>𝒮</b> but closed with respect to <b>𝒟</b>: labels never leak into prompts, logs, or commits.</p>
+      </div></div></div>
+    </div>
+
+    <div class="two-col anim">
+      <div class="mini ok">
+        <h4>Three rules that make it production-safe</h4>
+        <p><strong>1.</strong> The benchmark is frozen — evolution scores against it forever and writes to it never.
+        <strong>2.</strong> Every run and every promotion passes a human.
+        <strong>3.</strong> Cheap signals may <em>guide</em> the search; only the frozen scorer may <em>decide</em>.</p>
+      </div>
+      <div class="mini no">
+        <h4>The failure mode we design against</h4>
+        <p>A system that improves its score by gaming the metric instead of the task — suppressing highlights to
+        inflate precision, loosening thresholds, or editing the grader. Every section below carries a guardrail
+        against exactly this.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ §3 FEEDBACK → ISSUE CARDS ══════════════════ -->
+<section id="feedback" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§4 · From feedback to issue cards</div>
+    <h2 class="anim">Evidence in, ranked problems out</h2>
+    <p class="lede anim">Real feedback is precious, sparse, and biased toward whatever a human happened to
+      notice. The Context Lake — append-only, checksummed pulls — joins it with runtime traces and the style
+      guide, and the diagnose module turns that join into ranked, evidence-backed issue cards. This is the
+      first thing the system builds, because everything downstream consumes its output.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/flow_diagnose.svg" alt="Flow: feedback rows, documents, traces, and snapshot feed the Context Lake; a six-step chain normalizes, joins, dedups, clusters, scores severity, and emits issue cards; G1 PM triage and G2 Dev feasibility route defects to search pathways, preferences to a do-not-optimize constraint, infeasible items to a backlog" loading="lazy">
+      </div>
+      <p class="cap"><b>What happens to a failure?</b> Six deterministic-ish steps turn raw rows into
+        <code>issue_card</code> objects; two human gates then sort them into search pathways, a
+        do-not-optimize constraint, or a backlog. The preference path leaves the frame on purpose — it is
+        a boundary, not a task.</p>
+    </div>
+
+    <p class="anim">Deduplication is three-layered on purpose: exact hash, then MinHash, then embeddings at
+      0.88 similarity with an LLM tiebreak — because the same failure arrives as forty CSV rows and
+      should cost one issue card, not forty. Clustering is HDBSCAN against a failure taxonomy; severity is a
+      weighted sigmoid over miss-rate, false-positive rate, highlight failures, coverage, and a per-rule
+      business weight.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-severity"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-severity"><div class="inner"><div class="math-card">
+        <div class="mh">Issue severity</div>
+        <div class="eq">$$s = \sigma\!\Big(w_1 R_{\mathrm{miss}} + w_2 \mathrm{FP}_{\mathrm{rate}} + w_3 H_{\mathrm{fail}} + w_4\,\mathrm{coverage} + w_5\, b_{\mathrm{rule}}\Big)$$</div>
+        <p class="note"><b>R_miss</b> is the miss rate on that cluster's rules, <b>FP_rate</b> the false-positive
+          rate, <b>H_fail</b> the highlight-anchor failure share, <b>coverage</b> how much of the rule's surface
+          forms the cluster actually saw, and <b>b_rule</b> a business weight (critical behaviors outrank stylistic
+          preferences). Severity ranks the backlog; it never enters <b>S(c)</b> — the scorer stays the judge.</p>
+      </div></div></div>
+    </div>
+
+    <div class="out anim"><span class="arr">→</span> issue_card = {id, rule, class, evidence: [row_ids + trace_ids + spans], pathway_hint, severity, ts}</div>
+  </div>
+</section>
+
+<!-- ══════════════════ §4 SCORING, INJECTION, FREEZE ══════════════════ -->
+<section id="score" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§5 · Scoring, injection, and the freeze</div>
+    <h2 class="anim">How a defect becomes a measurable candidate</h2>
+    <p class="lede anim">An approved defect becomes one of four pathways — <strong>PATH-A</strong> output
+      anchoring, <strong>PATH-B</strong> retrieval, <strong>PATH-C</strong> prompt, <strong>PATH-D</strong>
+      routing or threshold — and the coding agent authors one candidate per pathway (<a href="#proofread">§14</a>
+      names them for the proofreader). But a candidate is only as good as
+      the ruler it is graded by, and real user feedback alone cannot fill a benchmark dense enough to rank
+      hundreds of candidates. So the benchmark is synthetic by construction.</p>
+
+    <div class="actors anim">
+      <span class="actor a-mod"><span class="tdot"></span>strict modules</span>
+      <span class="actor a-model"><span class="tdot"></span>injector + verifier models</span>
+      <span class="actor a-hum"><span class="tdot"></span>human audit</span>
+    </div>
+
+    <p class="anim">Clean, compliant inputs get exactly one controlled violation each — injected by a
+      frontier model that must return a <em>diff</em>, never a free-written document, because free writing
+      produces stereotyped errors that flatter detectors. Every injection is then verified: deterministic
+      oracles first (regexes, gazetteers, format checks — code, not prompts), then
+      three independent rounds by a different model family, scored on a rubric. Anything short of unanimous
+      ≥4/5 is rejected, not repaired. Distractors — clean but tricky — force the benchmark to measure
+      precision, not just recall; minimal pairs isolate single-rule sensitivity; canaries (nonsense marks no
+      model has seen) sit sealed in the holdout to catch memorization at promotion time.</p>
+
+    <div class="fig anim">
+      <div class="fig-svg">
+        <svg class="inject-svg" viewBox="0 0 640 250" role="img" aria-label="Animation: a clean document gets one controlled violation injected, verified by three rounds, then frozen with a lock">
+          <rect x="40" y="28" width="300" height="196" rx="12" fill="#fff" stroke="var(--line-2)" stroke-width="1.5"/>
+          <rect x="40" y="28" width="300" height="34" rx="12" fill="var(--slate-soft)"/>
+          <rect x="40" y="50" width="300" height="12" fill="var(--slate-soft)"/>
+          <text x="58" y="50" style="font:600 13px var(--f-body);fill:var(--slate-d)">clean_doc_022.txt → injected</text>
+          <rect class="doc-line" x="58" y="80" width="264" height="9" rx="4"/>
+          <rect class="doc-line" x="58" y="100" width="240" height="9" rx="4"/>
+          <rect class="err-phrase" x="58" y="120" width="108" height="12" rx="3"/>
+          <rect class="doc-line" x="172" y="122" width="150" height="9" rx="4" style="animation-delay:.7s !important"/>
+          <line class="err-underline" x1="58" y1="136" x2="166" y2="136"/>
+          <rect class="doc-line" x="58" y="152" width="220" height="9" rx="4"/>
+          <rect class="doc-line" x="58" y="172" width="252" height="9" rx="4"/>
+          <rect class="doc-line" x="58" y="192" width="160" height="9" rx="4"/>
+          <g class="violation-chip">
+            <rect x="180" y="116" width="140" height="22" rx="11" fill="var(--stone-soft)" stroke="var(--stone)" stroke-width="1.2"/>
+            <text x="250" y="131" text-anchor="middle" style="font:600 12px var(--f-body);fill:var(--stone-d)">1 violation · rule known</text>
+          </g>
+          <text x="392" y="52" style="font:700 12px var(--f-body);fill:var(--ink-4);letter-spacing:.12em">VERIFY ×3</text>
+          <g class="vcheck" transform="translate(400,72)">
+            <circle cx="12" cy="12" r="12"/>
+            <path class="tick" d="M6 12.5 L10.5 17 L18 8.5"/>
+            <text x="34" y="16" style="font:500 13px var(--f-body);fill:var(--ink-2)">oracle pass</text>
+          </g>
+          <g class="vcheck" transform="translate(400,116)">
+            <circle cx="12" cy="12" r="12"/>
+            <path class="tick" d="M6 12.5 L10.5 17 L18 8.5"/>
+            <text x="34" y="16" style="font:500 13px var(--f-body);fill:var(--ink-2)">round 1 · 5/5</text>
+          </g>
+          <g class="vcheck" transform="translate(400,160)">
+            <circle cx="12" cy="12" r="12"/>
+            <path class="tick" d="M6 12.5 L10.5 17 L18 8.5"/>
+            <text x="34" y="16" style="font:500 13px var(--f-body);fill:var(--ink-2)">rounds 2–3 · ≥4</text>
+          </g>
+          <g class="lockgrp" transform="translate(400,206)">
+            <rect x="0" y="0" width="216" height="30" rx="8" fill="var(--slate-soft)" stroke="var(--slate)" stroke-width="1.4"/>
+            <text x="108" y="19.5" text-anchor="middle" style="font:700 13px var(--f-mono);fill:var(--slate-d)">bench_v7 · FROZEN · RO</text>
+          </g>
+        </svg>
+      </div>
+      <p class="cap"><b>Freeze in one motion.</b> One controlled error per item → oracle + 3-round cross-family
+        verification → hashed labels, sealed canaries, read-only mount. We budget a 20–40% rejection rate
+        during verification — if rejections fall under 10%, the verifier is too lenient, and that is a bug.</p>
+    </div>
+
+    <p class="anim">Two equations do the real work: span identity (when is a predicted span <em>the</em> gold
+      span?) and the composite score every candidate is ranked by. The score is deliberately multi-term —
+      per-rule F1, highlight quality, suggestion acceptance, minus cost, latency, and a regression penalty —
+      so that gaming any single term shows up as a loss somewhere else.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-iou"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-iou"><div class="inner"><div class="math-card">
+        <div class="mh">Span identity &amp; verification</div>
+        <div class="eq">$$\mathrm{IoU}(A,B) = \frac{|A \cap B|}{|A \cup B|}$$</div>
+        <div class="eq">$$\mathrm{TP} \;\iff\; \mathrm{IoU}(A,B) \ge 0.5 \;\;\wedge\;\; \mathrm{rule}(A) = \mathrm{rule}(B)$$</div>
+        <div class="eq">$$\mathrm{accept} \;\iff\; \min_{k=1,2,3} \mathrm{score}_k \ge 4/5 \quad\text{(unanimous, all three rounds)}$$</div>
+        <p class="note">A predicted span counts as correct only if it overlaps the gold span by at least half
+          of their union <b>and</b> names the same rule under an alias map. Verification is unanimous by design:
+          any round ≤3 rejects the item and it is re-sampled, never re-prompted until it passes.</p>
+      </div></div></div>
+    </div>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-scorer"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-scorer"><div class="inner"><div class="math-card">
+        <div class="mh">The frozen composite score</div>
+        <div class="eq">$$P_r = \frac{\mathrm{TP}_r}{\mathrm{TP}_r + \mathrm{FP}_r}, \qquad R_r = \frac{\mathrm{TP}_r}{\mathrm{TP}_r + \mathrm{FN}_r}, \qquad F_{1,r} = \frac{2 P_r R_r}{P_r + R_r}$$</div>
+        <div class="eq">$$H_r = \frac{\#\{\text{highlight OK}\}_r}{\#\{\text{predicted}\}_r}, \qquad A_r = \frac{\#\{\text{suggestion accepted}\}_r}{\#\{\text{suggestion judged}\}_r}$$</div>
+        <div class="eq">$$S(c) = \sum_{r} w_r \Big[\alpha F_{1,r}(c) + \beta H_r(c) + \gamma A_r(c)\Big] \;-\; \lambda_C\, C(c) \;-\; \lambda_L\, L(c) \;-\; \delta\, \mathrm{Regress}(c)$$</div>
+        <p class="note">Per rule <b>r</b> with business weight <b>w_r</b>: precision, recall, F1 on spans;
+          <b>H_r</b> highlight-anchor quality; <b>A_r</b> suggestion acceptance on judged samples. The penalties
+          keep cost <b>C</b>, latency <b>L</b>, and guardrail regressions inside the objective instead of
+          outside it. Weights (α, β, γ) and the penalty coefficients are part of the freeze — changing them
+          invalidates every prior score.</p>
+      </div></div></div>
+    </div>
+
+    <p class="anim">Why so paranoid about the freeze? Because a benchmark with soft labels becomes a
+      hill-climbing target for noise. The evolution may score against the frozen benchmark forever; it may
+      never write to it, never read the holdout labels, and never finalize its own promotion
+      (<a href="#proofread">§14</a> freezes it as <code>bench_v7</code> for the proofreader).</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §5 THE COST LADDER ══════════════════ -->
+<section id="ladder" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§6 · The cost ladder</div>
+    <h2 class="anim">Cheap signals first; money is spent in order of conviction</h2>
+    <p class="lede anim">Evaluating a candidate on the full discovery set is the expensive step, and most
+      candidates do not deserve it. The ladder exists so that money is spent in order of conviction: free
+      novelty and smoke checks kill duplicates and broken builds; a cheap pairwise judge ranks survivors;
+      a small proxy suite supplies the ranking signal for ~80% of all evaluations; only finalists reach
+      full discovery; only the run's best candidate reaches the sealed holdout, once.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/ladder_eval.svg" alt="Six stacked stage cards from novelty gate through holdout, each naming its documents, cost, kill condition, labels exposed, and whether it feeds search" loading="lazy">
+      </div>
+      <p class="cap"><b>When is money spent, when is a candidate killed?</b> Every stage names its kill
+        condition and what it is allowed to expose. The judge's cost is whatever the ledger says — this
+        page never assumes a per-call price.</p>
+    </div>
+
+    <p class="anim">The budget arithmetic is deliberately blunt: a $25 run cap against a 250-eval cap puts the
+      average proxy evaluation at about ten cents — a budget division, not a measured per-eval price
+      <span class="claim">budget arithmetic</span>. The LEVI baseline it is calibrated against reports
+      $4.50 for a 240-evaluation run <span class="claim paper">paper-reported</span>. Everything is memoized
+      on <code>(code_hash, doc, scorer_ver)</code>, so a re-evaluation of an unchanged candidate on an
+      unchanged document is free — which is why the same candidate can appear in the proxy column a dozen
+      times without moving the dollar figure.</p>
+
+    <div class="fig bleed img-fig anim">
+      <img src="figs/fig2_cost.png" alt="Bar chart of cost versus quality: LEVI at 4.5 dollars and score 76.5, versus GEPA, OpenEvolve, ShinkaEvolve, and frontier-only baselines at 15 to 30 dollars with lower scores" loading="lazy">
+      <p class="cap"><b>Cost vs. quality on the ADRS suite.</b> Scores are paper-reported means from LEVI 2026;
+        costs are LEVI's typical $4.50 and ballpark $15–30 for the baselines — comparative context, not
+        measurements of this system <span class="claim paper">paper-reported</span>.</p>
+    </div>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-proxy"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-proxy"><div class="inner"><div class="math-card">
+        <div class="mh">The proxy suite</div>
+        <div class="eq">$$P^{\star} = \arg\max_{P \subseteq \mathcal{D}_{\mathrm{disc}},\; |P| = k} \; \sum_{d \in P} \mathrm{std}_{c}\big(S(c, d)\big) \;-\; \lambda_{\mathrm{red}} \!\!\sum_{d \ne d' \in P}\!\! \mathrm{sim}(d, d')$$</div>
+        <div class="eq">$$\mathrm{rank}\big(\hat{S}_P(c)\big) \;\approx\; \mathrm{rank}\big(S_{\mathrm{full}}(c)\big) \qquad\text{(selection needs ordering, not exact scores)}$$</div>
+        <p class="note">The proxy picks <b>k ≈ 12–20</b> documents that discriminate between candidates —
+          high cross-candidate score variance, low mutual redundancy — and ranks on their mean. What selection
+          needs is the <b>ordering</b>, not the absolute score; the rank-preservation demo later on this page
+          is synthetic, and the pilot must re-measure ρ on its own candidates before trusting the proxy
+          for finalist selection.</p>
+      </div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ §6 THE ARCHIVE ══════════════════ -->
+<section id="archive" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§7 · The archive</div>
+    <h2 class="anim">The archive remembers every cell, not just the winner</h2>
+    <p class="lede anim">A single best-so-far curve hides the thing worth protecting: diversity. The lineage
+      archive is a MAP-Elites-style container, following LEVI, over a CVT tessellation of the behavioral descriptor space —
+      each cell keeps its own champion, scored by the same frozen <code>S(c)</code>. A candidate that is worse
+      globally but better on its cell's slice of behavior still earns an archive slot, a parent slot, and a
+      place in the UCB statistics.</p>
+
+    <div class="fig bleed img-fig anim">
+      <img src="figs/fig3_map_elites.png" alt="Grid of 36 CVT-MAP-Elites cells, each showing a cell-best score in the occupied cells and the word empty in the unoccupied ones, colored by score" loading="lazy">
+      <p class="cap"><b>Keep best per cell, not global best only.</b> 36 cells over two behavioral descriptors,
+        synthetic but structurally faithful — occupied cells carry their best score, empty cells are the
+        diversity reserve <span class="claim illus">synthetic</span>. The two dimensions here are complexity
+        and a rule tradeoff; the pilot's actual descriptors are recorded in <code>model_plan.md</code>, and <a href="#proofread">§14</a> grounds them.</p>
+    </div>
+
+    <p class="anim">Every insert carries its full provenance: the diff, the parent ids, the behavioral
+      descriptor, the score vector (not just the scalar), the evaluation cost, and the ledger entry. That
+      record is what makes the next section's lineage question — <em>where did this candidate come from?</em> —
+      a lookup instead of an archaeology project.</p>
+
+    <div class="out anim"><span class="arr">→</span> archive insert = {cand_id, parents[], cell, descriptor[], S_vector, cost, ledger_id, ts}</div>
+  </div>
+</section>
+
+<!-- ══════════════════ §7 SELECTION & ROUTING ══════════════════ -->
+<section id="router" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§8 · Selection &amp; routing</div>
+    <h2 class="anim">Who gets picked, and which model does the work</h2>
+    <p class="lede anim">Parent selection is a softmax over the archive's rank signals — the judge's
+      Bradley–Terry rating, the accuracy rank, and a novelty bonus that decays with how often a cell has
+      already been sampled. Mutation routing is a bandit: cheap small models get ~90% of the attempts,
+      frontier models get the rest and take over entirely when the run stagnates. Nothing here is free-form
+      creativity; both decisions are parameterized, logged, and reproducible from the run seed.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-sampling"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-sampling"><div class="inner"><div class="math-card">
+        <div class="mh">Parent selection</div>
+        <div class="eq">$$P(i) \;\propto\; \exp\!\big(-\alpha\, r_{\mathrm{BT}}(i) \;-\; \beta\, r_{\mathrm{acc}}(i) \;-\; \eta \log(1+v_i)\big)$$</div>
+        <p class="note"><b>r_BT</b> is the rank under the judge's Bradley–Terry ratings (lower is better),
+          <b>r_acc</b> the rank under proxy accuracy, <b>v_i</b> how often cell <b>i</b> has already been
+          sampled. The negative signs make worse-rated, already-mined cells <b>less</b> likely; the novelty
+          term keeps cold cells in play. Temperatures (α, β, η) are run parameters, recorded per run.</p>
+      </div></div></div>
+    </div>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-ucb"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-ucb"><div class="inner"><div class="math-card">
+        <div class="mh">Mutation routing &amp; novelty</div>
+        <div class="eq">$$\mathrm{UCB}(m) \;=\; Q(m) + c \sqrt{\frac{\ln N}{n_m}}, \qquad \cos\big(d_{\mathrm{new}}, d_{\mathrm{arch}}\big) > 0.95 \;\Rightarrow\; \text{LLM novelty vote}$$</div>
+        <p class="note">Each mutation model <b>m</b> carries a mean reward <b>Q(m)</b> (archive-insert rate
+          weighted by score gain) and an exploration bonus. The novelty gate is two-stage: an embedding
+          cosine check against every archived descriptor, and — only for near-duplicates — an LLM vote on
+          whether the diff is <em>interesting</em> despite the similarity. Duplicates are rejected before any
+          evaluation dollars are spent.</p>
+      </div></div></div>
+    </div>
+
+    <p class="anim">When the best-so-far score fails to improve by more than ε for 30 consecutive evaluations,
+      the router stops pretending: it fires a paradigm shift — the frontier model, given k diverse cells and
+      explicit permission to break the current approach — and records the shift as a first-class event in
+      the run's timeline. Stagnation is data, not a bug.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §8 SEARCH SPACE ══════════════════ -->
+<section id="space" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§9 · Search space</div>
+    <h2 class="anim">What actually evolves — and what "open-ended" means here</h2>
+    <p class="lede anim">The search space 𝒮 is the direct sum of the seven pipeline dimensions, each with its
+      own representation, its own mutation operators, and its own guardrails. "Open-ended" does not mean
+      arbitrary code; it means the space is large enough that exhaustive search is impossible and structured
+      enough that every point in it can be built, sandboxed, and scored by the same contract.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-space"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-space"><div class="inner"><div class="math-card">
+        <div class="mh">The search space</div>
+        <div class="eq">$$\mathcal{S} \;=\; \mathcal{S}_{\mathrm{prompt}} \oplus \mathcal{S}_{\mathrm{retr}} \oplus \mathcal{S}_{\mathrm{chunk}} \oplus \mathcal{S}_{\mathrm{route}} \oplus \mathcal{S}_{\mathrm{logic}} \oplus \mathcal{S}_{\mathrm{hl}} \oplus \mathcal{S}_{\tau}$$</div>
+        <p class="note">Prompt templates; retrieval configuration (top-k, reranker, gazetteer contents);
+          chunking (splitter, overlap, window); routing (model choice per rule class); deterministic logic
+          (regexes, parsers — the most consequential and most dangerous dimension); highlight anchoring
+          (fuzzy-match strategy); and per-rule thresholds τ. The adapter contract <b>run(doc) → spans[]</b>
+          bounds all seven: any point in 𝒮 must compile to something the sandbox can execute.</p>
+      </div></div></div>
+    </div>
+
+    <p class="anim">Seeding matters more than the search. A cold archive with one seed cell produces
+      candidates that all resemble the seed; an archive seeded from the current production configuration
+      plus a handful of deliberately diverse rule-tradeoff points gives the bandit something to explore
+      against. The seeds are hand-authored, reviewed at G3, and versioned with the run —
+      <a href="#proofread">§14</a> lists the proofreader's exact seven dimensions and seeds.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §9 THE VAULT ══════════════════ -->
+<section id="vault" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§10 · The vault</div>
+    <h2 class="anim">The Benchmark Vault is a boundary, not a database</h2>
+    <p class="lede anim">Everything so far has been about proposing and ranking. This section is about the one
+      component the proposal machinery is structurally forbidden to touch. The vault lives in a separate
+      account, is mounted read-only into the sandbox, and exposes exactly two verbs to the search: a scoring
+      endpoint it may call as often as the budget allows, and a finalization endpoint that requires a human
+      on the line.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/vault_boundary.svg" alt="A dashed boundary encloses the discovery set, sealed holdout, frozen labels, frozen scorer, canaries, and version pin; the coding agent, mutation model, and evaluator farm sit outside; allowed arrows show POST score and a gated POST finalize; a red band below lists forbidden actions" loading="lazy">
+      </div>
+      <p class="cap"><b>What the agent can never do.</b> The allowed verbs are scoring and a human-gated
+        finalize. The forbidden band is enforced twice: at the API, and by a guardrail diff-scanner that
+        rejects the <em>candidate</em> if its diff touches the vault, the benchmark, or the scorer — a request
+        filter alone would not stop a patch that rewrites its own grader.</p>
+    </div>
+
+    <p class="anim">The canaries deserve their own sentence. Each holdout item may carry a nonsense mark — a
+      trademark-shaped token no model has ever seen, planted only in the sealed set. A candidate that begins
+      flagging canaries it could not have read in discovery has memorized something it should not have, and
+      is blocked at promotion regardless of its score. This is the memorization check, and it fires exactly
+      once per run, at the moment that matters.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §10 LINEAGE ══════════════════ -->
+<section id="lineage" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§11 · Lineage</div>
+    <h2 class="anim">Where the best candidate actually came from</h2>
+    <p class="lede anim">The question every evolution system should be able to answer on demand: what chain of
+      edits produced this candidate, what did each link cost, and does the final number survive the jump from
+      the proxy to the full set to the sealed holdout? The archive answers all three from the same record.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/tree_lineage.svg" alt="Top-down lineage tree from seed version zero through two children to three grandchildren, each labeled with score, pathway, and cost; a callout shows the best candidate with full discovery, holdout, and run totals" loading="lazy">
+      </div>
+      <p class="cap"><b>One run's ancestry.</b> Scores and costs here are illustrative — shaped to the
+        archive schema, not pilot output <span class="claim illus">illustrative</span> — but the chain shape
+        is exactly what the archive stores: every node keeps its diff, parent ids, descriptor, score vector,
+        and ledger entry. Note cand_011, still queued: lineage does not require completion.</p>
+    </div>
+
+    <p class="anim">The proxy's job in this story is narrow and worth stating precisely: it must preserve the
+      <em>ranking</em> of candidates well enough that the finalists handed to full discovery are the right
+      finalists. Exact proxy scores are not required; rank correlation is. The demo below makes the point on
+      synthetic data — the pilot must measure its own ρ before trusting the proxy with finalist selection.</p>
+
+    <div class="fig bleed img-fig anim">
+      <img src="figs/fig4_proxy_rank.png" alt="Scatter plot of full discovery score versus proxy score for 24 synthetic candidates, tightly correlated with Spearman rho about 0.99" loading="lazy">
+      <p class="cap"><b>Proxy preserves rank (synthetic demo).</b> 24 candidates, 60 documents, 12-document
+        proxy, Spearman ρ ≈ 0.99 — a structural illustration of what rank preservation looks like, not a
+        measurement <span class="claim illus">synthetic</span>.</p>
+    </div>
+
+    <p class="anim">And the last number a run reports is the one that keeps everyone honest: the gap between
+      the discovery score and the holdout score of the promoted candidate. If that gap exceeds ε, the run's
+      "best" was overfit to discovery, and the promotion decision at G4 has to weigh exactly that.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §11 THE GATES ══════════════════ -->
+<section id="gates" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§12 · The gates</div>
+    <h2 class="anim">Four gates, every one a real decision</h2>
+    <p class="lede anim">The machine proposes at every stage. At four points a person can stop it, and at each
+      of those points the system has already prepared the material a decision requires: the evidence for G1,
+      the feasibility record for G2, the pathways and budget for G3, the full and holdout scores plus the
+      canary result for G4.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/flow_gates.svg" alt="Four gate cards in a column — PM triage, Dev feasibility, owner run approval, and owner plus PM ship decision — each listing its inputs and outcomes; a red panel below shows the preference-ignore path feeding do-not-optimize constraints; a gray panel notes timestamped immutable votes" loading="lazy">
+      </div>
+      <p class="cap"><b>Who can say no, and what happens when they do.</b> Only G4 is synchronous — G1 through
+        G3 run on queues so the search never idles waiting for a human. A rollback reason re-enters the
+        archive as a constraint on future mutations: "no" is data too.</p>
+    </div>
+
+    <p class="anim">The second-most-valuable output of triage is not the approved defect; it is the
+      <strong>PREFERENCE_IGNORE</strong> vote — the explicit list of things the loop must not chase. Those
+      preferences are injected into every mutation prompt and enforced as Regress guards at scoring time, so
+      a candidate that "improves" the score by breaking a preference is killed by the scorer, not by hope.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-regress"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-regress"><div class="inner"><div class="math-card">
+        <div class="mh">Regression guards &amp; stop conditions</div>
+        <div class="eq">$$\mathrm{Regress}(c) \;=\; \max\big\{0,\;\, S_{\mathrm{base}} - S(c)\big\} \quad\text{on guardrail rules}$$</div>
+        <div class="eq">$$S_{\mathrm{discovery}} - S_{\mathrm{holdout}} \;\le\; \varepsilon \qquad\text{(checked once, at /finalize)}$$</div>
+        <div class="eq">$$\mathrm{stop} \;\iff\; \mathrm{budget} \;\lor\; 250\ \mathrm{evals} \;\lor\; 12\mathrm{h} \;\lor\; \big(\Delta S_{\mathrm{best}} < \varepsilon \text{ for } P = 30\ \mathrm{evals}\big) \;\lor\; \mathrm{human}$$</div>
+        <p class="note">The Regress term inside <b>S(c)</b> punishes any drop on the guardrail rules relative
+          to the base configuration — this is what turns a PREFERENCE_IGNORE vote into an automatic kill.
+          The holdout gap is checked exactly once, at <b>/finalize</b>, and the stop condition is a
+          disjunction the orchestrator evaluates every evaluation: money, count, wall-clock, stagnation,
+          or a human pulling the plug.</p>
+      </div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ §12 THE PLATFORM ══════════════════ -->
+<section id="platform" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§13 · The platform</div>
+    <h2 class="anim">One run, start to finish — then the whole machine</h2>
+    <p class="lede anim">Everything above is now a component. This section runs the loop once, in order, and
+      then zooms out to the ten-component platform that hosts it. Read the loop figure as one evolution run;
+      read the platform figure as everything that has to exist for that run to be possible at all.</p>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/loop_evolution.svg" alt="Single-column loop of eleven stages from parent archive to archive insert with per-stage costs, a paradigm-shift bypass, and a continue loop-back on the right; a stagnation exit below leads to full discovery, holdout, and a human decision; a guardrail strip runs along the bottom" loading="lazy">
+      </div>
+      <p class="cap"><b>How one evolution run works.</b> The run flows top to bottom; the continue loop-back
+        returns on the right; stagnation exits below; guardrails along the bottom. Costs sit beside each
+        stage — ledger labels, not assumed prices.</p>
+    </div>
+
+    <p class="anim">One component deserves prose rather than a caption, because it is the piece most easily
+      mistaken for a rubber stamp: the <strong>judge</strong>. After smoke, each surviving candidate is
+      compared <em>pairwise</em> against up to ten incumbents — the judge reads the full candidate files, not
+      a summary — and wins feed a regularized Bradley–Terry refit that updates the ratings used by parent
+      selection. Following SIFT, the build guide reports ρ ≈ 0.68 agreement with human pairwise votes for this judge,
+      against 0.40 for the baseline that grades a single answer in isolation
+      <span class="claim">build-guide reported</span>. The point is not that the judge is right; it is that
+      it is <em>measurably less wrong</em> than the alternative, and its errors are auditable from the
+      pairwise records.</p>
+
+    <div class="math-wrap anim">
+      <button class="math-btn" aria-expanded="false" aria-controls="m-bt"><span class="sigma">Σ</span>Show the math<span class="chev">▾</span></button>
+      <div class="math-panel" id="m-bt"><div class="inner"><div class="math-card">
+        <div class="mh">Pairwise judge &amp; Bradley–Terry</div>
+        <div class="eq">$$P(i \succ j) \;=\; \frac{\theta_i}{\theta_i + \theta_j}, \qquad \hat{\theta} \;=\; \arg\max_{\theta} \sum_{(i,j,y)} \log P(y \mid \theta) \;-\; \lambda \|\log \theta\|^2$$</div>
+        <p class="note">Each pairwise win <b>y</b> between candidates <b>i</b> and <b>j</b> contributes a
+          Bradley–Terry likelihood term; the L2 penalty on log-ratings regularizes sparsely-compared
+          candidates toward the pack. Ratings <b>θ</b> are refit after every judge batch and consumed by the
+          parent-selection softmax. The judge is a model, its votes are logged, and a sample of them is
+          auditable against human judgments — that audit is a build task, not a hope.</p>
+      </div></div></div>
+    </div>
+
+    <div class="fig bleed svg-fig anim">
+      <div class="fig-scroll">
+        <img src="figs/hld_platform.svg" alt="Platform diagram flowing top to bottom: sources feed the Context Lake, then Diagnose, issue cards, human triage, pathways, and the orchestrator; the evolution loop box holds parent selection, mutation router, app adapter, evaluator farm, and lineage archive; below sit the benchmark vault and WebUI, then a band from finalists to deploy" loading="lazy">
+      </div>
+      <p class="cap"><b>Ten components, one outer loop.</b> Numbered ①–⑩ per the research draft's component
+        list. The bottom band is what happens after the loop stops; deployed runs feed new traces and
+        corrections back into the lake — the outer loop of §15.</p>
+    </div>
+
+    <div class="fig bleed img-fig anim">
+      <img src="figs/fig1_hillclimb.png" alt="Hillclimb chart: best-so-far composite score rises from 0.61 to about 0.83 over 240 evaluations with jumps at paradigm shift, highlight fix, and retriever fix, while cumulative cost rises linearly to about 4.50 dollars" loading="lazy">
+      <p class="cap"><b>What a run looks like when it works.</b> Best-so-far score against evaluations, with a
+        cost burn-down on the right axis — a synthetic trajectory in the shape of Shinka/LEVI-style runs,
+        not pilot output <span class="claim illus">synthetic</span>. The three jumps are the illustrative
+        paradigm shift and the two fixes from §14's worked example.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ §14 STARTER INSTANTIATION ══════════════════ -->
+<section id="proofread" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§14 · Starter instantiation</div>
+    <h2 class="anim">How it lands on a document proofreader</h2>
+    <p class="lede anim">Everything above was the generic machine. Here is its first instantiation: a
+      document proofreader whose contract is <code>run(doc_bytes) → spans[]</code> — a span is a character
+      range plus a rule id plus a suggestion — checked against style guide <code>sg_v4.2</code>. This is
+      the starter domain, not the destination: every mechanism below is one the generic loop already
+      describes.</p>
+
+    <div class="callout anim">
+      <span class="ct">Worked example · illustrative<span class="claim illus">illustrative</span></span>
+      A dotted European date — <code>3.3.2024</code> — sails through. The datetime rule's gazetteer chunk
+      expects <code>March 3, 2024</code> or ISO <code>2024-03-03</code>. The human fix: add a dotted-date
+      pattern to the retrieval chunk. The consequence nobody predicts: version strings like
+      <code>v1.2.3</code> now trip the same rule, and a different rule starts firing on page numbers.
+      This episode — and every candidate id, score, and dollar figure in the lineage diagrams above —
+      is <strong>illustrative</strong>, shaped to the archive's schema, not measured pilot output.
+    </div>
+
+    <p class="anim">The mapping, component by component. The <strong>pipeline</strong> is eight stages:
+      source document, chunking, style-guide retrieval, a Bedrock call per rule, span proposal, threshold,
+      highlight anchoring, and the annotated document. The <strong>search space</strong> is those seven
+      editable dimensions — 𝒮<sub>chunk</sub>, 𝒮<sub>retr</sub>, 𝒮<sub>prompt</sub>, 𝒮<sub>route</sub>,
+      𝒮<sub>logic</sub>, 𝒮<sub>hl</sub>, 𝒮<sub>τ</sub> — and the four <strong>pathways</strong> are concrete:
+      PATH-A fixes the highlighter, PATH-B the retrieval (top-k, reranker, gazetteer), PATH-C the prompt,
+      PATH-D the routing and thresholds.</p>
+
+    <p class="anim">The <strong>benchmark</strong> freezes as <code>bench_v7</code>: ~60 discovery documents
+      plus ~30 sealed holdout documents, one injected violation per item, verified by deterministic oracles
+      (datetime regexes, trademark gazetteers, unit-spacing checks) and three unanimous cross-family rounds,
+      with distractors, minimal pairs, and sealed canaries. The <strong>ladder</strong> runs on 5 fixed
+      smoke documents under a $25 / 250-eval budget — about ten cents per proxy evaluation by budget
+      arithmetic. None of these numbers are the point; they are one domain's settings for a loop that
+      works the same anywhere.</p>
+
+    <div class="out anim"><span class="arr">→</span> starter domain: proofreading (sg_v4.2 · bench_v7 · 60+30 docs) · next domains: any editable app + frozen benchmark</div>
+  </div>
+</section>
+
+<!-- ══════════════════ §15 OUTER LOOP ══════════════════ -->
+<section id="lifecycle" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§15 · The outer loop</div>
+    <h2 class="anim">What "self-improving" actually means here — and where it stops</h2>
+    <p class="lede anim">There are two loops, and conflating them is how self-improving systems get
+      oversold. The <strong>inner loop</strong> is one evolution run: sample, mutate, judge, archive, repeat
+      until the stop condition. The <strong>outer loop</strong> is the lifecycle: a promoted candidate ships,
+      its output generates new traces and human corrections, those land in the Context Lake, the diagnose
+      module turns them into next quarter's issue cards, and a new run begins with a warmer archive than the
+      last one.</p>
+
+    <p class="anim">The recursion is real, and it is also bounded — by design, not by hope. Three things never
+      enter the loop's writing set: the vault and its labels, the scorer and its weights, and the seven
+      dimensions' boundary itself (𝒮 only changes when a human revises <code>model_plan.md</code> and re-runs
+      G3). A system that could edit its own ruler would eventually do so; this one cannot, which is the
+      entire reason the outer loop can be allowed to run at all.</p>
+
+    <p class="anim">The lifecycle's last act is the one most often skipped: every run — promoted or rolled
+      back — writes a report. The stop reason, the budget actually burned, the finalists and their
+      discovery–holdout gaps, the guardrail events, the judge's audit sample. A rolled-back run that never
+      wrote down <em>why</em> will be re-run, expensively, by whoever comes next. The archive makes that
+      unnecessary — if the report exists.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ §14 RECAP ══════════════════ -->
+<section id="recap" class="prose">
+  <div class="wrap">
+    <div class="kicker anim">§16 · Recap</div>
+    <h2 class="anim">Frozen, evolving, human — the three lists</h2>
+
+    <div class="recap anim">
+      <div class="rc frozen">
+        <div class="rn">FROZEN · never touched</div>
+        <h4>The measuring stick</h4>
+        <p>Benchmark Vault (bench_v7 + holdout + canaries), the scorer and its weights, the vault API, the
+          guardrails, the sandbox contract. Evolution scores against these forever.</p>
+      </div>
+      <div class="rc evolves">
+        <div class="rn">EVOLVES · searched</div>
+        <h4>The editable machine</h4>
+        <p>Prompts, retrieval, chunking, routing, deterministic logic, highlight mapping, thresholds — the seven
+          dimensions of 𝒮, authored by the coding agent from sampled parents.</p>
+      </div>
+      <div class="rc human">
+        <div class="rn">HUMAN · every time</div>
+        <h4>The gates</h4>
+        <p>PM triage (defect vs preference), Dev feasibility, run approval with pathways and budget,
+          and the single promote/rollback decision after the one permitted holdout evaluation.</p>
+      </div>
+    </div>
+
+    <div class="callout anim">
+      <span class="ct">The one-sentence version</span>
+      A coding agent proposes, a frozen benchmark disposes, cheap judgment (novelty, smoke, pairwise judge,
+      Bradley–Terry, proxy suite) decides what is <em>worth</em> evaluating — and a human decides what is
+      worth <em>keeping</em>.
+    </div>
+
+    <p class="anim" style="margin-top:34px;color:var(--ink-2);font-size:15px">Next: <code>BUILD_GUIDE.md</code> —
+      the same machinery as build tickets with per-phase verification gates, model wiring, and the exact schemas
+      each module must emit. This page is the map; that document is the marching order.</p>
+  </div>
+</section>
+
+<footer>
+  <div class="fwrap">
+    <h4>Papers — SIFT and LEVI are the two main foundations</h4>
+    <div class="refs">
+      <div>★ <a href="https://arxiv.org/abs/2609.19526">SIFT</a> — Fu et al. 2026 · main · judge + Bradley–Terry verification ladder</div>
+      <div>★ <a href="https://arxiv.org/abs/2605.09764">LEVI</a> — Tanveer 2026 · main · cheap loop, MAP-Elites, proxies</div>
+      <div><a href="https://arxiv.org/abs/2509.19349">ShinkaEvolve</a> — Lange et al. 2025 · the loop, novelty, bandits</div>
+      <div><a href="https://arxiv.org/abs/2507.19457">GEPA</a> — Agrawal et al. 2025 · reflective mutation</div>
+      <div><a href="https://arxiv.org/abs/2505.22954">Darwin–Gödel Machine</a> — Zhang et al. 2025 · sandbox + archive precedent</div>
+      <div>SynCED-EnDe · Chopra et al. 2025 — typed injection, three-round recheck</div>
+    </div>
+    <div class="meta">
+      Generated from <code>research_draft.md</code> v0.4 and <code>BUILD_GUIDE.md</code> v1.0 ·
+      figures via <code>gen_diagrams.py</code> (architecture SVGs) and <code>gen_figs.py</code> (plots) ·
+      pilot: ~60 discovery + ~30 holdout docs · benchmark <code>bench_v7</code> · rulebook <code>sg_v4.2</code> ·
+      claim labels: <b>paper-reported</b> = from cited papers; <b>budget arithmetic</b> = division on stated caps;
+      <b>synthetic</b>/<b>illustrative</b> = structural demonstrations, not pilot results.
+      Mathematics rendered with KaTeX.
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ── math toggles ── */
+document.querySelectorAll('.math-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const panel = document.getElementById(btn.getAttribute('aria-controls'));
+    const open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    panel.classList.toggle('open', !open);
+    const label = btn.childNodes[1];
+    if (label && label.nodeType === Node.TEXT_NODE) label.textContent = open ? 'Show the math' : 'Hide the math';
+  });
+});
+
+/* ── scroll progress ── */
+const bar = document.querySelector('#progress span');
+let ticking = false;
+function onScroll(){
+  const h = document.documentElement;
+  const max = h.scrollHeight - h.clientHeight;
+  bar.style.transform = 'scaleX(' + (max > 0 ? h.scrollTop / max : 0) + ')';
+  ticking = false;
+}
+addEventListener('scroll', () => { if (!ticking) { requestAnimationFrame(onScroll); ticking = true; } }, {passive:true});
+onScroll();
+
+/* ── in-view one-shot animations ── */
+const animObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in','in-view'); animObs.unobserve(e.target); } });
+}, {threshold:.18, rootMargin:'0px 0px -6% 0px'});
+document.querySelectorAll('.anim, .fig, .hero-visual, .inject-svg').forEach(el => animObs.observe(el));
+
+/* ── nav rail active state ── */
+const railLinks = [...document.querySelectorAll('#rail a')];
+const sections = railLinks.map(a => document.getElementById(a.dataset.sec)).filter(Boolean);
+const navObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      railLinks.forEach(a => a.classList.toggle('active', a.dataset.sec === e.target.id));
+    }
+  });
+}, {rootMargin:'-42% 0px -50% 0px'});
+sections.forEach(s => navObs.observe(s));
+</script>
+</body>
+</html>

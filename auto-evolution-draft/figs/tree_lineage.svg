@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1000" width="960" height="1000" role="img" aria-labelledby="t-tree_lineage">
+<title id="t-tree_lineage">Candidate lineage. Which ancestors does the best candidate carry, and what did each edit cost?</title>
+<rect width="960" height="1000" fill="#FFFFFF"/>
+<defs><marker id="a-6B7F96" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B7F96"/></marker><marker id="a-A98F3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#A98F3F"/></marker><marker id="a-2F6B57" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2F6B57"/></marker><marker id="a-1F3349" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1F3349"/></marker><marker id="a-5A9179" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5A9179"/></marker><marker id="a-7A6420" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7A6420"/></marker><marker id="a-C05621" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#C05621"/></marker></defs>
+<text x="480" y="52" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="32" font-weight="700" fill="#1F3349">Candidate lineage</text>
+<rect x="300" y="130" width="360" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b1"/>
+<text x="480" y="162" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b1" data-role="title">seed_v0</text>
+<text x="480" y="192" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b1">S(c) = 0.61</text>
+<text x="480" y="218" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b1">production baseline</text>
+<text x="480" y="244" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b1">start</text>
+<rect x="60" y="330" width="400" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b2"/>
+<text x="260" y="362" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b2" data-role="title">cand_004</text>
+<text x="260" y="392" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b2">S(c) = 0.65</text>
+<text x="260" y="418" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b2">PATH-B · retrieval + gazetteer</text>
+<text x="260" y="444" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b2">small refine · $0.11</text>
+<rect x="500" y="330" width="400" height="140" rx="14" fill="#F4F6F8" stroke="#6B7F96" stroke-width="2" data-box="b3"/>
+<text x="700" y="362" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b3" data-role="title">cand_011</text>
+<text x="700" y="392" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b3">queued · inherits parent</text>
+<text x="700" y="418" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b3">PATH-D · threshold edit</text>
+<text x="700" y="444" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b3">queued for eval</text>
+<rect x="40" y="530" width="290" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b4"/>
+<text x="185" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b4" data-role="title">cand_019</text>
+<text x="185" y="592" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b4">S(c) = 0.64</text>
+<text x="185" y="618" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b4">PATH-A · highlighter</text>
+<text x="185" y="644" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b4">small refine · $0.09</text>
+<rect x="335" y="530" width="290" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b5"/>
+<text x="480" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b5" data-role="title">cand_027</text>
+<text x="480" y="592" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">S(c) = 0.71</text>
+<text x="480" y="618" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">PATH-C · prompt decompose</text>
+<text x="480" y="644" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">paradigm shift · $0.34</text>
+<rect x="630" y="530" width="290" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b6"/>
+<text x="775" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b6" data-role="title">cand_041</text>
+<text x="775" y="592" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">S(c) = 0.73</text>
+<text x="775" y="618" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">PATH-B + reranker</text>
+<text x="775" y="644" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">small refine · $0.12</text>
+<path d="M 480 270 L 260 330" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 480 270 L 700 330" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 200 470 L 190 530" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 320 470 L 480 530" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 700 470 L 770 530" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="730" width="880" height="150" rx="14" fill="#E7F0EB" stroke="#2F6B57" stroke-width="2.5"/>
+<text x="480" y="770" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="700" fill="#2F6B57">best of the run</text>
+<text x="480" y="806" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349">full discovery 0.73</text>
+<text x="480" y="840" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" font-weight="500" fill="#4A443C">holdout 0.718  (gap ≤ ε)</text>
+<text x="480" y="872" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">run: $18.40 · 240 evals</text>
+<path d="M 770 670 L 770 730" fill="none" stroke="#2F6B57" stroke-width="2.4" marker-end="url(#a-2F6B57)"/>
+<text x="480" y="930" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" font-weight="500" fill="#7A7368">stop: STAGNATION_30 ∧ budget_75% · every node keeps its diff and score vector</text>
+<text x="480" y="962" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#A39B8D">scores and costs shown are illustrative; the chain shape is what the archive stores</text>
+</svg>

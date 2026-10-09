@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1390" width="960" height="1390" role="img" aria-labelledby="t-flow_diagnose">
+<title id="t-flow_diagnose">What happens to a failure?. Feedback rows and traces become ranked, evidence-backed issue cards — or a constraint.</title>
+<rect width="960" height="1390" fill="#FFFFFF"/>
+<defs><marker id="a-6B7F96" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B7F96"/></marker><marker id="a-A98F3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#A98F3F"/></marker><marker id="a-2F6B57" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2F6B57"/></marker><marker id="a-1F3349" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1F3349"/></marker><marker id="a-5A9179" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5A9179"/></marker><marker id="a-7A6420" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7A6420"/></marker><marker id="a-C05621" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#C05621"/></marker></defs>
+<text x="480" y="52" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="32" font-weight="700" fill="#1F3349">What happens to a failure?</text>
+<rect x="40" y="130" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b1"/>
+<text x="255" y="168" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b1" data-role="title">feedback CSV rows</text>
+<rect x="490" y="130" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b2"/>
+<text x="705" y="168" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b2" data-role="title">documents + offsets</text>
+<rect x="40" y="222" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b3"/>
+<text x="255" y="260" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b3" data-role="title">LangSmith + Bedrock traces</text>
+<rect x="490" y="222" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b4"/>
+<text x="705" y="260" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b4" data-role="title">snapshot + style guide</text>
+<path d="M 255 294 L 255 330" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<path d="M 705 294 L 705 330" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<path d="M 40 166 L 20 166 L 20 390 L 40 390" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<path d="M 920 166 L 940 166 L 940 390 L 920 390" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="314" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">evidence</text>
+<rect x="40" y="330" width="880" height="120" rx="14" fill="#E9EEF3" stroke="#3B4F66" stroke-width="2" data-box="b5"/>
+<text x="480" y="362" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b5" data-role="title">Context Lake</text>
+<text x="480" y="392" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">append-only</text>
+<text x="480" y="418" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">checksummed pulls</text>
+<path d="M 480 450 L 480 500" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="478" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">lake snapshot</text>
+<rect x="40" y="500" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b6"/>
+<text x="175" y="532" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b6" data-role="title">normalize</text>
+<text x="175" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">NFKC · offsets</text>
+<text x="175" y="588" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">highlight/detect split</text>
+<rect x="345" y="500" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b7"/>
+<text x="480" y="532" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b7" data-role="title">join traces</text>
+<text x="480" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b7">miss-rate · prompt</text>
+<text x="480" y="588" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b7">hash · tokens</text>
+<rect x="650" y="500" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b8"/>
+<text x="785" y="532" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b8" data-role="title">dedup</text>
+<text x="785" y="562" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">exact → MinHash</text>
+<text x="785" y="588" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">→ emb 0.88 → LLM</text>
+<rect x="40" y="650" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b9"/>
+<text x="175" y="682" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b9" data-role="title">issue card</text>
+<text x="175" y="712" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b9">evidence · class</text>
+<text x="175" y="738" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b9">pathway hint</text>
+<rect x="345" y="650" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b10"/>
+<text x="480" y="682" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b10" data-role="title">severity</text>
+<text x="480" y="712" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b10">σ(w·features) ·</text>
+<text x="480" y="738" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b10">business weight</text>
+<rect x="650" y="650" width="270" height="120" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b11"/>
+<text x="785" y="682" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b11" data-role="title">cluster</text>
+<text x="785" y="712" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b11">HDBSCAN ·</text>
+<text x="785" y="738" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b11">failure taxonomy</text>
+<path d="M 310 560 L 345 560" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 615 560 L 650 560" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 785 620 L 785 650" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 650 710 L 615 710" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 345 710 L 310 710" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<path d="M 175 770 L 245 830" fill="none" stroke="#6B7F96" stroke-width="2.2" marker-end="url(#a-6B7F96)"/>
+<text x="210" y="802" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">issue_card</text>
+<rect x="40" y="830" width="400" height="140" rx="14" fill="#F7F0DF" stroke="#7A6420" stroke-width="2" data-box="b12"/>
+<text x="240" y="862" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b12" data-role="title">G1 · PM triage</text>
+<text x="240" y="892" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b12">defect / preference /</text>
+<text x="240" y="918" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b12">needs evidence + rationale</text>
+<rect x="520" y="830" width="400" height="140" rx="14" fill="#F7F0DF" stroke="#7A6420" stroke-width="2" data-box="b13"/>
+<text x="720" y="862" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="23" font-weight="600" fill="#1F3349" data-in="b13" data-role="title">G2 · Dev feasibility</text>
+<text x="720" y="892" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b13">feasible / infeasible</text>
+<text x="720" y="918" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b13">{reason, effort, risk}</text>
+<path d="M 440 900 L 520 900" fill="none" stroke="#7A6420" stroke-width="2.4" marker-end="url(#a-7A6420)"/>
+<text x="480" y="890" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A6420">defects</text>
+<rect x="40" y="1030" width="430" height="90" rx="14" fill="#FBEBDD" stroke="#C05621" stroke-width="2" data-box="b14"/>
+<text x="255" y="1062" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b14" data-role="title">do-not-optimize</text>
+<text x="255" y="1092" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b14">never chase · Regress guard</text>
+<path d="M 245 970 L 245 1030" fill="none" stroke="#C05621" stroke-width="2.2" stroke-dasharray="10 7" marker-end="url(#a-C05621)"/>
+<text x="140" y="1005" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#C05621">PREFERENCE_IGNORE</text>
+<rect x="490" y="1030" width="410" height="120" rx="14" fill="#E7F0EB" stroke="#2F6B57" stroke-width="2" data-box="b15"/>
+<text x="695" y="1062" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b15" data-role="title">search pathways</text>
+<text x="695" y="1092" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b15">PATH-A highlight · B retrieval</text>
+<text x="695" y="1118" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b15">C prompt · D routing/threshold</text>
+<path d="M 725 970 L 725 1030" fill="none" stroke="#2F6B57" stroke-width="2.4" marker-end="url(#a-2F6B57)"/>
+<text x="725" y="1005" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#2F6B57">approved + feasible</text>
+<rect x="40" y="1200" width="880" height="90" rx="14" fill="#F4F6F8" stroke="#6B7F96" stroke-width="2" stroke-dasharray="8 6" data-box="b16"/>
+<text x="480" y="1232" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="600" fill="#1F3349" data-in="b16" data-role="title">backlog</text>
+<text x="480" y="1262" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b16">infeasible + reason</text>
+<path d="M 915 970 Q 975 1085 915 1200" fill="none" stroke="#6B7F96" stroke-width="2.2" stroke-dasharray="10 7" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="1340" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" font-weight="500" fill="#7A7368">every vote carries its reason · preferences re-enter as constraints, not tasks</text>
+</svg>

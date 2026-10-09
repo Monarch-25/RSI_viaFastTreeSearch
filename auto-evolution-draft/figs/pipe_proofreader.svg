@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 1700" width="960" height="1700" role="img" aria-labelledby="t-pipe_proofreader">
+<title id="t-pipe_proofreader">The proofreader pipeline — seven editable dimensions. Which parts of this pipeline may change?</title>
+<rect width="960" height="1700" fill="#FFFFFF"/>
+<defs><marker id="a-6B7F96" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B7F96"/></marker><marker id="a-A98F3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#A98F3F"/></marker><marker id="a-2F6B57" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2F6B57"/></marker><marker id="a-1F3349" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1F3349"/></marker><marker id="a-5A9179" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5A9179"/></marker><marker id="a-7A6420" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7A6420"/></marker><marker id="a-C05621" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#C05621"/></marker></defs>
+<text x="480" y="52" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="32" font-weight="700" fill="#1F3349">The proofreader pipeline — seven editable dimensions</text>
+<text x="480" y="96" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" font-weight="500" fill="#7A7368">PDF / DOCX in  →  annotated document out  ·  run(doc_bytes) → spans[]</text>
+<rect x="40" y="150" width="880" height="100" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b1"/>
+<text x="480" y="182" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b1" data-role="title">source document</text>
+<text x="480" y="212" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b1">text + char offsets + page map</text>
+<rect x="40" y="334" width="880" height="100" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b2"/>
+<text x="480" y="366" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b2" data-role="title">chunk</text>
+<text x="480" y="396" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b2">splitter · overlap · window</text>
+<text x="480" y="462" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮chunk</text>
+<rect x="40" y="518" width="880" height="100" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b3"/>
+<text x="480" y="550" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b3" data-role="title">style-guide retrieval</text>
+<text x="480" y="580" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b3">top-k · reranker · gazetteer</text>
+<text x="480" y="646" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮retr</text>
+<rect x="40" y="702" width="880" height="100" rx="14" fill="#E7F0EB" stroke="#2F6B57" stroke-width="2" data-box="b4"/>
+<text x="480" y="734" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b4" data-role="title">Bedrock call (per rule)</text>
+<text x="480" y="764" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b4">prompt template · model · schema</text>
+<text x="480" y="830" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮prompt · 𝒮route</text>
+<rect x="40" y="886" width="880" height="100" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b5"/>
+<text x="480" y="918" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b5" data-role="title">span proposal</text>
+<text x="480" y="948" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">predicted spans + confidence</text>
+<text x="480" y="1014" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮logic</text>
+<rect x="40" y="1070" width="880" height="100" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b6"/>
+<text x="480" y="1102" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b6" data-role="title">τ threshold</text>
+<text x="480" y="1132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">per-rule surfacing threshold</text>
+<text x="480" y="1198" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮τ</text>
+<rect x="40" y="1254" width="880" height="100" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b7"/>
+<text x="480" y="1286" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b7" data-role="title">highlight anchor</text>
+<text x="480" y="1316" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b7">fuzzy match → PDF coords</text>
+<text x="480" y="1382" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="600" fill="#2F6B57">𝒮hl</text>
+<rect x="40" y="1438" width="880" height="100" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b8"/>
+<text x="480" y="1470" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="24" font-weight="600" fill="#1F3349" data-in="b8" data-role="title">suggestion + document</text>
+<text x="480" y="1500" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">fix text · annotated output</text>
+<path d="M 480 298 L 480 334" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="320" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">text+offsets</text>
+<path d="M 480 482 L 480 518" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="504" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">chunks</text>
+<path d="M 480 666 L 480 702" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="688" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">rule chunks</text>
+<path d="M 480 850 L 480 886" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="872" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">spans</text>
+<path d="M 480 1034 L 480 1070" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="1056" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">spans</text>
+<path d="M 480 1218 L 480 1254" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="1240" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">surfaced</text>
+<path d="M 480 1402 L 480 1438" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="1424" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#7A7368">anchored</text>
+<rect x="40" y="1570" width="880" height="80" rx="14" fill="#F7F0DF" stroke="#7A6420" stroke-width="2.5" stroke-dasharray="12 8"/>
+<text x="480" y="1606" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="19" font-weight="600" fill="#5A4A14">never evolves: scorer · vault · adapter contract run(doc) → spans[]</text>
+</svg>

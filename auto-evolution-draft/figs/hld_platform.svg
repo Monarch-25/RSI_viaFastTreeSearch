@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 3150" width="960" height="3150" role="img" aria-labelledby="t-hld_platform">
+<title id="t-hld_platform">The platform — ten components, one outer loop. Real-world signal in at the top, the evolution loop in the middle, deployment closing the loop.</title>
+<rect width="960" height="3150" fill="#FFFFFF"/>
+<defs><marker id="a-6B7F96" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#6B7F96"/></marker><marker id="a-A98F3F" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#A98F3F"/></marker><marker id="a-2F6B57" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#2F6B57"/></marker><marker id="a-1F3349" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#1F3349"/></marker><marker id="a-5A9179" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#5A9179"/></marker><marker id="a-7A6420" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#7A6420"/></marker><marker id="a-C05621" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10 z" fill="#C05621"/></marker></defs>
+<text x="480" y="52" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="32" font-weight="700" fill="#1F3349">The platform — ten components, one outer loop</text>
+<text x="480" y="108" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="700" fill="#A39B8D">PROOFREADER RUNS</text>
+<rect x="40" y="130" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b1"/>
+<text x="255" y="168" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b1" data-role="title">documents</text>
+<rect x="490" y="130" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b2"/>
+<text x="705" y="168" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b2" data-role="title">runtime traces</text>
+<rect x="40" y="222" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b3"/>
+<text x="255" y="260" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b3" data-role="title">human corrections</text>
+<rect x="490" y="222" width="430" height="72" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b4"/>
+<text x="705" y="260" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b4" data-role="title">style guide sg_v4.2</text>
+<path d="M 255 294 L 255 330" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<path d="M 705 294 L 705 330" fill="none" stroke="#6B7F96" stroke-width="2" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="330" width="880" height="150" rx="14" fill="#E9EEF3" stroke="#3B4F66" stroke-width="2" data-box="b5"/>
+<text x="480" y="362" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b5" data-role="title">Context Lake ②</text>
+<text x="480" y="392" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">snapshots · traces</text>
+<text x="480" y="418" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">docs + offsets</text>
+<text x="480" y="444" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">feedback · nudges</text>
+<text x="480" y="470" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b5">append-only</text>
+<rect x="40" y="520" width="880" height="130" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b6"/>
+<text x="480" y="552" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b6" data-role="title">Diagnose M1</text>
+<text x="480" y="582" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">normalize → join</text>
+<text x="480" y="608" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">→ dedup → cluster</text>
+<text x="480" y="634" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b6">→ severity</text>
+<path d="M 480 480 L 480 520" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="690" width="880" height="110" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b7"/>
+<text x="480" y="722" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b7" data-role="title">issue cards</text>
+<text x="480" y="752" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b7">ISS-xxx + evidence</text>
+<path d="M 480 650 L 480 690" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="840" width="880" height="140" rx="14" fill="#F7F0DF" stroke="#7A6420" stroke-width="2" data-box="b8"/>
+<text x="480" y="872" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b8" data-role="title">Human triage ⑩</text>
+<text x="480" y="902" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">PM: defect / pref?</text>
+<text x="480" y="928" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">Dev: feasible?</text>
+<text x="480" y="954" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b8">G1 · G2</text>
+<path d="M 480 800 L 480 840" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<rect x="620" y="1010" width="300" height="80" rx="14" fill="#FBEBDD" stroke="#C05621" stroke-width="2" data-box="b9"/>
+<text x="770" y="1048" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b9" data-role="title">do-not-optimize</text>
+<path d="M 700 980 L 760 1010" fill="none" stroke="#C05621" stroke-width="2.4" stroke-dasharray="10 7" marker-end="url(#a-C05621)"/>
+<text x="835" y="1002" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#C05621">preference</text>
+<rect x="40" y="1010" width="540" height="140" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b10"/>
+<text x="310" y="1042" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b10" data-role="title">Pathways view ⑧</text>
+<text x="310" y="1072" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b10">M2: pathways · seeds</text>
+<text x="310" y="1098" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b10">G3: user approval</text>
+<text x="310" y="1124" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b10">code + trace search</text>
+<path d="M 300 980 L 300 1010" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="1190" width="880" height="90" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b11"/>
+<text x="480" y="1222" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="20" font-weight="600" fill="#1F3349" data-in="b11" data-role="title">Orchestrator ⑦</text>
+<text x="480" y="1252" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b11">Temporal + SQS · nudge queue · budget · stop rules</text>
+<path d="M 480 1150 L 480 1190" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="1320" width="880" height="740" rx="22" fill="#E7F0EB" stroke="#2F6B57" stroke-width="3.5"/>
+<text x="480" y="1362" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="22" font-weight="700" fill="#2F6B57">EVOLUTION LOOP</text>
+<rect x="60" y="1390" width="840" height="96" rx="14" fill="#FFFFFF" stroke="#2F6B57" stroke-width="2" data-box="b12"/>
+<text x="480" y="1422" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b12" data-role="title">parent selection</text>
+<text x="480" y="1452" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b12">softmax · novelty</text>
+<rect x="60" y="1516" width="840" height="96" rx="14" fill="#FFFFFF" stroke="#2F6B57" stroke-width="2" data-box="b13"/>
+<text x="480" y="1548" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b13" data-role="title">Mutation Router ⑥</text>
+<text x="480" y="1578" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b13">90% small / 10% frontier</text>
+<rect x="60" y="1642" width="840" height="96" rx="14" fill="#FFFFFF" stroke="#2F6B57" stroke-width="2" data-box="b14"/>
+<text x="480" y="1674" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b14" data-role="title">App Adapter ①</text>
+<text x="480" y="1704" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b14">run(doc) → spans[]</text>
+<text x="480" y="1730" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b14">sandbox · Bedrock proxy</text>
+<rect x="60" y="1768" width="840" height="96" rx="14" fill="#FFFFFF" stroke="#2F6B57" stroke-width="2" data-box="b15"/>
+<text x="480" y="1800" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b15" data-role="title">Evaluator Farm ④</text>
+<text x="480" y="1830" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b15">smoke → judge → proxy</text>
+<rect x="60" y="1894" width="840" height="96" rx="14" fill="#FFFFFF" stroke="#2F6B57" stroke-width="2" data-box="b16"/>
+<text x="480" y="1926" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b16" data-role="title">Lineage Archive ⑤</text>
+<text x="480" y="1956" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b16">MAP-Elites + ledger</text>
+<path d="M 905 1980 Q 915 1700 905 1420" fill="none" stroke="#2F6B57" stroke-width="2.2" stroke-dasharray="8 6" marker-end="url(#a-2F6B57)"/>
+<path d="M 480 1280 L 480 1320" fill="none" stroke="#2F6B57" stroke-width="2.4" marker-end="url(#a-2F6B57)"/>
+<rect x="40" y="2100" width="880" height="120" rx="14" fill="#E9EEF3" stroke="#7A6420" stroke-width="3" data-box="b17"/>
+<text x="480" y="2132" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b17" data-role="title">Benchmark Vault ③</text>
+<text x="480" y="2162" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b17">/score · gated /finalize</text>
+<text x="480" y="2188" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b17">bench_ver pinned</text>
+<path d="M 480 2060 L 480 2100" fill="none" stroke="#2F6B57" stroke-width="2.4" stroke-dasharray="10 7" marker-end="url(#a-2F6B57)"/>
+<text x="540" y="2082" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#2F6B57">score</text>
+<rect x="40" y="2260" width="880" height="100" rx="14" fill="#F4F6F8" stroke="#3B4F66" stroke-width="2" data-box="b18"/>
+<text x="480" y="2292" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b18" data-role="title">WebUI ⑨</text>
+<text x="480" y="2322" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b18">discovery tree · hillclimb</text>
+<text x="480" y="2348" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b18">$ burn · worker status</text>
+<path d="M 480 2220 L 480 2260" fill="none" stroke="#6B7F96" stroke-width="2.4" stroke-dasharray="10 7" marker-end="url(#a-6B7F96)"/>
+<rect x="40" y="2400" width="880" height="95" rx="14" fill="#FFFFFF" stroke="#3B4F66" stroke-width="2" data-box="b19"/>
+<text x="480" y="2432" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b19" data-role="title">top per-cell</text>
+<text x="480" y="2462" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b19">finalists</text>
+<rect x="40" y="2535" width="880" height="95" rx="14" fill="#E9EEF3" stroke="#3B4F66" stroke-width="2" data-box="b20"/>
+<text x="480" y="2567" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b20" data-role="title">full discovery</text>
+<text x="480" y="2597" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b20">~60–100 docs · finalists</text>
+<rect x="40" y="2670" width="880" height="95" rx="14" fill="#E9EEF3" stroke="#3B4F66" stroke-width="2" data-box="b21"/>
+<text x="480" y="2702" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b21" data-role="title">holdout</text>
+<text x="480" y="2732" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b21">×1 · /finalize · sealed</text>
+<rect x="40" y="2805" width="880" height="95" rx="14" fill="#F7F0DF" stroke="#7A6420" stroke-width="2" data-box="b22"/>
+<text x="480" y="2837" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b22" data-role="title">promotion gate ⑩</text>
+<text x="480" y="2867" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b22">G4: owner + PM</text>
+<rect x="40" y="2940" width="880" height="95" rx="14" fill="#E7F0EB" stroke="#2F6B57" stroke-width="2" data-box="b23"/>
+<text x="480" y="2972" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="21" font-weight="600" fill="#1F3349" data-in="b23" data-role="title">deploy</text>
+<text x="480" y="3002" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#4A443C" data-in="b23">versioned tag · rollback</text>
+<path d="M 480 2360 L 480 2400" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<path d="M 480 2495 L 480 2535" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<path d="M 480 2630 L 480 2670" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<path d="M 480 2765 L 480 2805" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<path d="M 480 2900 L 480 2940" fill="none" stroke="#6B7F96" stroke-width="2.4" marker-end="url(#a-6B7F96)"/>
+<text x="480" y="3080" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#2F6B57">deployed runs feed new traces + feedback back into the lake — the outer loop (§13)</text>
+<text x="480" y="3112" text-anchor="middle" font-family="-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif" font-size="18" font-weight="500" fill="#A39B8D">①–⑩: ten components · slate=data · white=process · teal=evolution · stone=gate</text>
+</svg>
